@@ -8,8 +8,8 @@
       span.little-words Termina em
       .js-countDown.js-withActive[data-ends="#{best_guess.ends_at.to_i}" data-timezone="#{timezone}" data-starts="#{best_guess.happens_at.to_i}" data-tournament="#{best_guess.tournament? && best_guess.happens_at.nil?}" data-end-step="#{best_guess.duration_time}"]
     .box-marketValue.u-textBold.u-textCenter
-      span = "valor de mercado: "
-      span.u-textBlack = number_to_currency best_guess.market_price
+    /  span = "valor de mercado: "
+    /  span.u-textBlack = number_to_currency best_guess.market_price
     .box-price
       span.text-small.u-marginRgt5 Pontos
       span.box-price-big.value.js-priceValue = best_guess.partial_value / 100.0
@@ -48,8 +48,8 @@
         span.box-info-big
           span.u-textBold = l best_guess.happens_at, format: :concise
     .box-marketValue.u-textBold.u-textCenter
-      span = "valor de mercado: "
-      span.u-textBlack = number_to_currency best_guess.market_price
+    /  span = "valor de mercado: "
+    /  span.u-textBlack = number_to_currency best_guess.market_price
     .box-price
       .box-price-big
         span G
@@ -85,8 +85,8 @@
       i.fa.fa-trophy
       .box-notify-text.-winner Venceu
     .box-marketValue.u-textBold.u-textCenter.u-noMargin
-      span.u-textWhite = "valor de mercado: "
-      span.u-textWhite = number_to_currency best_guess.market_price
+    /  span.u-textWhite = "valor de mercado: "
+    /  span.u-textWhite = number_to_currency best_guess.market_price
     .box-price.-box-price-notify.-winner
       span.box-price-big.-box-price-big-notify.js-priceValue = number_to_currency best_guess.partial_value / 100.0
     .box-action
@@ -103,8 +103,8 @@
         span.u-textBold.js-discount = "Prêmio "
         span.small  Gama
     .box-marketValue.u-textBold.u-textCenter
-      span.u-textWhite = "valor de mercado: "
-      span.u-textWhite = number_to_currency best_guess.market_price
+    /  span.u-textWhite = "valor de mercado: "
+    /  span.u-textWhite = number_to_currency best_guess.market_price
       .box-lastBidder
         .box-lastBidder-name.js-currentWinner = best_guess.winner.try(:username) || best_guess.decorate.last_username
         .box-lastBidder-label Vencedor
