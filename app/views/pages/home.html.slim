@@ -14,7 +14,7 @@ section#howworks.features
           h4.feature-title
             | Jogos nível Gama
           p.feature-desc
-            | Responda a desafios super divertidos sobre a Sumatra e todo o Universo do Surf :)
+            | Responda a desafios sobre o Gama Experiência e tudo oque rola lá dentro :)
       .columns.-md-1-3
         .feature
           .feature-image
@@ -22,18 +22,18 @@ section#howworks.features
           h4.feature-title
             | Ranking Eliminatório
           p.feature-desc
-            | Participe dos Games e dispute entre os demais jogadores os prêmios exclusivos da Sumatra /o/
+            | Dê o seu melhor para vencer os desafios, os últimos colocados tem chance de serem eliminados!
       .columns.-md-1-3
         .feature
           .feature-image
             span = image_tag('icon-discount.jpg')
           h4.feature-title
-            | Ganhe Prêmios
+            | Prêmios Gama
           p.feature-desc
-            | O Grupo Unique forneceu para o Sumatra Games um prêmio incrível, confira logo abaixo!
+            | A Gama Academy vai dar um prêmio especial para o primeiro colocado do ranking geral /o/
 - if @highlight.present?
   section#highlight.u-paddingTop80
-    h2.heading.u-textCenter.-spaced.u-marginBot50 Jogo Especial Sumatra
+    h2.heading.u-textCenter.-spaced.u-marginBot50 Game Especial
     .container.-small
       .row
         - if @highlight.is_a?(Auction)
@@ -42,7 +42,7 @@ section#howworks.features
           = render 'best_guesses/highlight', best_guess: @highlight
 section#playnow.play.u-paddingTop80.u-paddingBot100
   - unless @auctions.none? && @best_guesses.none?
-    h2.heading.u-textCenter.-spaced.u-marginBot50 Jogos em Andamento
+    h2.heading.u-textCenter.-spaced.u-marginBot50 Games em Andamento
   - if @auctions.any?
     .container.-small
       .row
