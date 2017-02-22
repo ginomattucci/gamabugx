@@ -101,7 +101,7 @@
       i.fa.fa-trophy.u-textWhite
       div.boxCard-info-win.text-jumbo.u-textWhite Ganhou!
     .boxCard-info-desc.-success.u-textCenter.u-textBold.u-textWhite
-      = "Pontos Sumatra "
+      = "Pontos Gama "
       span.js-priceValue = @best_guess.final_cost
     .box-marketValue.u-textBold.u-textCenter
       span.u-textWhite = "Valor de mercado: "
@@ -120,11 +120,11 @@
     h1.boxCard-title.gameTitle.u-textCenter = truncate(@best_guess.title, length: 27)
   .boxCard-notify.box-notify.-box-notify-danger.u-marginTop15.u-padding10
     h2.boxCard-info-title.-sold.u-textCenter.text-danger.u-textUp.u-noMargin
-      span.text-large.u-textWhite Pontos Sumatra
+      span.text-large.u-textWhite Pontos Gama
       div.-box-price-big-notify.u-textWhite.js-priceValue = @best_guess.final_cost
     .box-notify-discount.text-mega.u-textCenter.u-textBold.u-marginBot10.u-marginTop7
       span.u-textBold.js-discount = "Prêmio "
-      span.small  Sumatra
+      span.small  Gama
     .box-marketValue.u-textBold.u-textCenter
       span.u-textWhite = "Valor de mercado: "
       span.u-textWhite = number_to_currency @best_guess.market_price
@@ -149,7 +149,7 @@ section.highlight
           .box-badge.boxCard-badge.-highlight.js-PlayerCountHighlight[class="js-best-guess-#{@best_guess.id} #{@best_guess.tournament? ? '-blue' : '-yellow'}"]
             span.badge-game
               i.fa.fa-badge
-              | #{@best_guess.tournament? ? ' Torneio ' : ' Sumatra '}
+              | #{@best_guess.tournament? ? ' Torneio ' : ' Gama '}
             span.badge-gameType palpite
             - if @best_guess.tournament?
               span.js-Players
@@ -214,7 +214,7 @@ section.highlight
     .box-badge.boxCard-badge[class="#{@best_guess.tournament? ? '-blue' : '-yellow'}"]
       span.badge-game
         i.fa.fa-badge
-        |  Sumatra
+        |  Gama
       span.badge-gameType  palpite
     .modal-header
       span.modal-close data-close="modal" &times;

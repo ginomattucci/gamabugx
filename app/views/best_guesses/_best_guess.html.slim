@@ -96,12 +96,12 @@
 - content_for :finished_box, flush: true
   .box-notify.-box-notify-danger
     .box-info.-box-info-notify
-      .box-notify-text.u-textUp.u-textBold Pontos Sumatra
+      .box-notify-text.u-textUp.u-textBold Pontos Gama
     .box-price.-box-price-notify
       span.box-price-big.-box-price-big-notify.js-priceValue = best_guess.final_cost
       .box-notify-discount
         span.u-textBold.js-discount = "Prêmio "
-        span.small  Sumatra
+        span.small  Gama
     .box-marketValue.u-textBold.u-textCenter
       span.u-textWhite = "valor de mercado: "
       span.u-textWhite = number_to_currency best_guess.market_price
@@ -122,7 +122,7 @@
     .box-badge[class="#{best_guess.tournament? ? '-blue' : '-yellow'}"]
       span.badge-game
         i.fa.fa-badge
-        |  #{best_guess.tournament? ? 'Torneio' : 'Sumatra'}
+        |  #{best_guess.tournament? ? 'Torneio' : 'Gama'}
       span.badge-gameType  Palpite
       - if best_guess.tournament?
         span.js-Players
@@ -179,7 +179,7 @@
     .box-badge.boxCard-badge[class="#{best_guess.tournament? ? '-blue' : '-yellow'}"]
       span.badge-game
         i.fa.fa-badge
-        |  Sumatra
+        |  Gama
       span.badge-gameType  palpite
     .modal-header
       span.modal-close data-close="modal" &times;
