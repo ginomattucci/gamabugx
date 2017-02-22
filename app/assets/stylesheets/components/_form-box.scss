@@ -1,0 +1,147 @@
+.formBox {
+  border-radius: 6px;
+  overflow: hidden;
+
+  hr {
+    margin: 2rem 0;
+    width: 100%;
+    border-color: #f2f2f2;
+    border-width: 2px;
+    border-style: solid;
+
+    &.-danger {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: $form-link-color;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+}
+
+.modal {
+  .formBox {
+    border: 0;
+  }
+
+  .formBox-body {
+    padding: 0;
+  }
+}
+
+.formBox-body {
+  padding: 20px 40px;
+}
+
+.formBox-title {
+  margin-top: 0;
+}
+
+.formBox-dangerZone {
+  background: $form-dangerZone-background;
+  padding: 20px 40px;
+  color: $form-dangerZone-color;
+}
+
+.formBox-passwordZone {
+  background: $form-passwordZone-background;
+  padding: 20px 40px;
+  color: $form-passwordZone-color;
+  a {
+    color: $form-passwordZone-link-color;
+  }
+}
+
+.planForm {
+
+  .form-group {
+    position: relative;
+    text-align: center;
+
+    &:before {
+      font-family: 'FontAwesome';
+      font-size: 1.5rem;
+      position: absolute;
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $brand-blue;
+      width: 26px;
+      text-align: center;
+    }
+  }
+
+  input {
+    width: 100%;
+    border-color: #ccc !important;
+    padding: 10px 10px 10px 80px;
+    font-size: 1.1rem;
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:before {
+      content: 'lore';
+    }
+  }
+
+  .column {
+    &:nth-of-type(1) {
+      .form-group:before {
+        content: '\f09d'
+      }
+
+      input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-width: 0;
+        border-right-width: 0;
+      }
+    }
+
+    &:nth-of-type(2) {
+      .form-group:before {
+        content: '\f084'
+      }
+
+      input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-width: 0;
+      }
+    }
+
+    &:nth-of-type(3) {
+      .form-group:before {
+        content: '\f007'
+      }
+
+      input {
+        border-top-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-right-width: 0;
+      }
+    }
+
+    &:nth-of-type(4) {
+      .form-group:before {
+        content: '\f073'
+      }
+
+      input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  }
+}

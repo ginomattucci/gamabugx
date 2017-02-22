@@ -1,0 +1,11 @@
+section.features
+  .container
+    .row
+      .column.-md-4-5.u-centered.boxCard.u-paddingTop15.u-paddingBot35.u-textCenter
+        h1.u-textUp.text-success.text-giga.u-marginBot10.u-marginTop5 Pedido feito com sucesso
+        - if @purchase.payment_method.to_sym == Payment::BankSlip.payment_method
+          p.u-textBold.u-textUp.text-neutral.text-largest Pague o boleto abaixo
+          = link_to 'Visualizar boleto', @purchase.invoice_url, target: '_blank', class: 'btn -btn-lg -btn-success'
+        - else
+          p.u-textBold.u-textUp.text-neutral.text-largest Pago com #{t("payment.#{@purchase.payment_method}")}
+          = link_to 'Ver fatura', @purchase.invoice_url, target: '_blank', class: 'btn -btn-lg -btn-success'

@@ -1,0 +1,13 @@
+section.play.u-paddingTop30.u-paddingBot100
+  - if @auctions.any?
+    h2.heading.u-textCenter.-spaced Clicks
+    .container.-small
+      .row
+        = render @auctions
+  - if @best_guesses.any?
+    h2.heading.u-textCenter.-spaced.u-paddingTop30 Sumatra Games
+    .container.-small
+      .row
+        = render @best_guesses
+  - if @auctions.none? && @best_guesses.none?
+      h2.heading.u-textCenter.-spaced.u-paddingTop30 = "Nenhum jogo #{@status}"

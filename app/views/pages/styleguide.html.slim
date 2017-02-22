@@ -1,0 +1,101 @@
+h1 Super Games styleguide
+h2 Buttons
+.container
+  button.btn I'm a button
+  a.btn I'm a link
+  input.btn type="submit" value="I'm a input"
+  button.btn.-btn-line-primary Button
+
+h2 Boxes
+.container style="padding: 20px; background: #f2f2f2;"
+  .row
+    .column.-md-1-4
+      article.box
+        .box-image
+        .box-body
+          h1.box-title
+            | Iphone 6 plus 32gb space gray
+          .box-gameType
+            | Torneio
+            span.text-danger
+              |  (45 lances)
+          .box-info.-countdown
+            /| Ganhou!
+            span.box-info-small
+              | Jogando agora
+            span.box-info-big
+              span.u-textBold 100
+              |  pessoas
+          .box-price
+            span R$61,22
+            span.box-price-text Carlos coimbra
+          .box-action
+            button.btn.-btn-block Iniciou
+h2 Header
+= render 'partials/header'
+
+h2 Modal
+button.btn data-trig="modal" data-remote="http://localhost:3000/styleguide" data-target="#mods" Modal
+.modal-wrapper
+  #mods.modal'
+    .modal-header
+      span.modal-close data-close="modal" &times;
+      h3.modal-title Entre em contato
+    .modal-body
+      | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    .modal-footer.-with-action
+      button.btn Cancel
+
+h2 Forms
+.container
+  form
+h3 Form group
+label for="name"  Name
+input#name type="text"
+label for="email"  Email address
+input#email type="email"
+label
+  input type="checkbox"
+  | Remember me
+label
+  input#herp checked="" name="herpderp" type="radio"
+  | Herp
+label
+  input#derp name="herpderp" type="radio"
+  | Derp
+button.btn type="submit"  Submit
+
+.container
+  dl
+    dt
+      label Example label
+    dd
+      input type="text" placeholder="Usuário"
+
+.container
+  label.form-checkbox
+    input type="checkbox"
+    | Remember-me
+
+.container
+  dl.form
+    dt
+      label My fucking label
+    dd
+      input type="text"
+  dl.form.-dynamic
+    dt
+      label My fucking label
+    dd
+      input type="text"
+.container
+  .form-file
+    | Escolha um arquivo
+    = icon('upload')
+    input type="file"
+.container
+  textarea

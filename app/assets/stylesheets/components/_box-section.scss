@@ -1,0 +1,274 @@
+.boxCard {
+  background: #fff;
+  /* padding: 90px 30px 30px; */
+  padding-top: 36px;
+  border-radius: 6px;
+  position: relative;
+
+  .box-footer {
+    padding: 0;
+    &.auctionHighlight {
+      padding-bottom: 16px;
+      border-bottom-right-radius: 6px;
+    }
+  }
+}
+
+.boxCard-title {
+  margin: 0;
+  line-height: 1.1;
+  font-size: 2.1rem;
+  color: $box-title-color;
+  transition: all .2s;
+
+  &.-dynamic {
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+    position: relative;
+    height: 137px;
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+  }
+
+  &:hover,
+  &:focus {
+    color: #333;
+  }
+}
+
+.gameTitle {
+  word-wrap: break-word;
+  margin: 8px 6px 6px 6px;
+  font-size: 1.5rem;
+  @media screen and (max-width: 989px) {
+    font-size: 1.2rem;
+    margin: 10px 6px 4px 6px;
+    &.-best-guess-high {
+      margin: 6px 6px 8px 6px;
+    }
+  }
+}
+
+.boxCard-image {
+  height: 383px;
+  @media screen and (max-width: 989px) {
+    height: 382px;
+  }
+  border-bottom-left-radius: 6px;
+}
+
+.boxCard-auction-wrapper {
+  height: 242px;
+  position: relative;
+  @media screen and (max-width: 989px) {
+    height: 342px;
+  }
+  @media screen and (max-width: 767px) {
+    height: 381px;
+  }
+
+  .box-info-big {
+    margin-top: -3px;
+  }
+
+  .box-marketValue {
+    line-height: 1em;
+    margin-bottom: 2px;
+  }
+
+  .box-notify-discount {
+    margin: 5px -15px 10px -15px;
+  }
+}
+
+.boxCard-auction {
+  border-radius: 6px;
+  overflow: hidden;
+  position: absolute;
+  bottom: -141px;
+  width: 100%;
+  @media screen and (min-width: 767px) and (max-width: 990px) {
+    bottom: -40px;
+  }
+  @media screen and (max-width: 767px) {
+    bottom: 0px;
+  }
+
+  .box-notify {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: 20px;
+    width: 100%;
+  }
+}
+
+.boxCard-timer {
+  margin-top: 30px;
+  width: 100%;
+  background: $box-info-background;
+  text-align: center;
+  color: $box-info-color;
+  border: 0;
+
+  &.-small {
+    font-size: 50px;
+    font-size: 2.3rem;
+    line-height: 1.4;
+    font-weight: bold;
+  }
+
+  &.-big {
+    height: 85px;
+    font-size: 2.3rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 43px;
+    padding: 5px;
+    margin-bottom: 10px !important;
+  }
+
+  &.-success {
+    background: $success;
+    color: #fff;
+  }
+
+  &.-warning {
+    background: $warning;
+    color: $danger;
+  }
+
+  &.-countdown {
+    color: $danger;
+  }
+
+  &.-best-guess {
+    background: #333;
+    color: #fff;
+  }
+
+  &.-colorInverse {
+    color: #333;
+  }
+}
+
+.boxCard-timer-text {
+  font-size: .875rem;
+  position: relative;
+  top: -22px;
+  color: #999;
+
+  &.-inverse {
+    top: 0;
+    line-height: 1;
+  }
+}
+
+.boxCard-badge {
+  position: absolute;
+  padding-top: 6px 0;
+  height: 36px;
+  color: #222;
+  left: 0;
+}
+
+#highlight {
+  .boxCard-info-wrapper {
+    @media screen and (max-width: 767px) {
+      min-height: 384px;
+    }
+    .boxCard-timer {
+      margin-top: 0px;
+    }
+  }
+}
+
+.boxCard-info-wrapper {
+  min-height: 320px;
+  position: relative;
+
+  .boxCard-timer {
+    margin-top: 10px;
+    margin-bottom: 18px;
+  }
+}
+
+.boxCard-info-title {
+  margin-bottom: -8px;
+  margin-top: 10px;
+  line-height: 1.3;
+
+  &.-success {
+    margin-top: 22px;
+  }
+
+  &.-sold {
+    line-height: 1;
+  }
+}
+
+.boxCard-info-win {
+  line-height: 1em;
+}
+
+.boxCard-info-desc {
+  margin-top: 0;
+  margin-bottom: 12px;
+
+  &.-success {
+    margin-bottom: -10px
+  }
+}
+
+.boxCard-notify {
+  &.box-notify {
+    margin: 0px 10px 10px 10px;
+    padding: 0px 20px 0px 20px;
+  }
+
+  .btn.-winner {
+    padding: 6px 20px;
+  }
+
+  .text-largest {
+    line-height: 1em;
+  }
+}
+
+.boxCard-counter {
+  background-color: #333;
+  text-align: center;
+  font-size: 1.0rem;
+  padding: 0px 20px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.boxCard-terms {
+  margin: 20px 0;
+  border: 1px solid #f1f1f1;
+  padding: 10px;
+
+  .title {
+    margin: 0;
+    margin-bottom: .5rem;
+    font-weight: bold;
+  }
+
+  dt {
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    font-size: .7rem;
+  }
+
+  dd {
+    color: #222;
+    margin-bottom: .8rem;
+    line-height: 1.2;
+  }
+}

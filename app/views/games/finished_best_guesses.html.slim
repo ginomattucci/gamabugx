@@ -1,0 +1,10 @@
+section.play.u-paddingTop30.u-paddingBot100
+  - if @best_guesses.any?
+    h2.heading.u-textCenter.-spaced.u-paddingTop30 Jogos finalizados Super Palpite
+    .container.-small
+      .row
+        = render @best_guesses
+      .row.u-textCenter
+        = paginate @best_guesses
+  - else  @best_guesses.none?
+      h2.heading.u-textCenter.-spaced.u-paddingTop30 Nenhum Super Palpite finalizado

@@ -1,0 +1,12 @@
+pt-BR:
+  activerecord:
+    models:
+      highlight:
+        one: 'Destaque'
+        other: 'Destaques'
+
+    attributes:
+      highlight:
+        target_type: 'Tipo do jogo'
+        target: 'Jogo alvo'
+        target_id: 'Jogo alvo'

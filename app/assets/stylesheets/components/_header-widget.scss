@@ -1,0 +1,35 @@
+.header-widget,
+.header-discount,
+.header-credit {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+
+  h3 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  .small {
+    margin-top: -5px;
+  }
+}
+
+.header-discount,
+.header-credit {
+  padding: 5px 0;
+}
+
+.header-discount {
+  border-right: 2px solid $brand-blueDark;
+  padding-right: 15px;
+  margin-right: 15px;
+
+  h3 {
+    font-weight: normal;
+  }
+}
+
+.header-credit {
+  margin-right: 20px;
+}

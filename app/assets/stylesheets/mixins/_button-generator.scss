@@ -1,0 +1,27 @@
+@mixin m-buttonGen($name, $color, $background, $reverse: false) {
+  @if $reverse {
+    .-btn-line-#{$name} {
+      border-color: $background;
+      background: transparent;
+      color: $background;
+
+      &:hover {
+        background: $background;
+        color: $color;
+        border-color: $background;
+      }
+    }
+  }
+  @else {
+    .-btn-#{$name} {
+      background: $background;
+      border-color: $background;
+      color: $color;
+
+      &:hover {
+        border-color: darken($background, 20%);
+        background: darken($background, 20%);
+      }
+    }
+  }
+}

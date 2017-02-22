@@ -1,0 +1,26 @@
+.container.features
+  .row
+    .column.-md-4-5.u-centered.boxCard.u-paddingTop20
+      h1.heading Suas compras
+      table.table
+        thead
+          tr
+            th
+              i.fa.fa-calendar
+              |  Data 
+            th
+              | Plano
+            th
+              i.fa.fa-money
+              |  Preço 
+            th
+              span.text-yellow
+                | V
+                i.fa.fa-bitcoin
+              |  ViraBits 
+            th
+              i.fa.fa-tasks
+              |  Status 
+
+        tbody
+          = render @purchases

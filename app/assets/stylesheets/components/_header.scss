@@ -1,0 +1,77 @@
+.header {
+  @include m-clearfix;
+  position: relative;
+  background: $header-background;
+  padding: 13px 0 0;
+}
+
+.header-brand {
+  float: left;
+  margin: 0;
+  margin-top: 3px;
+  text-transform: uppercase;
+
+  a {
+    color: $brand-yellow;
+  }
+}
+
+.header-menu {
+  float: right;
+  padding-top: 10px;
+
+  &.-noBtn {
+    padding-top: 0;
+  }
+}
+
+// # ========== Header submenu
+.header-submenu {
+  background-color: $brand-blueDark;
+  position: relative;
+  margin-top: 13px;
+
+  ul {
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  .header-menu,
+  .header-brand {
+    padding: 0;
+  }
+
+  .header {
+    .u-clearfix {
+      padding: 0 13px 10px;
+    }
+  }
+
+  .header-submenu {
+    margin-top: 0;
+  }
+}
+
+@keyframes header-game-starded {
+  from {
+    background: $success;
+  }
+
+  50% {
+    background: transparent;
+  }
+
+  to {
+    background: $success;
+  }
+}
+
+.js-gameStarted {
+  &.on {
+    animation-name: header-game-starded;
+    animation-iteration-count: infinite;
+    animation-duration: 0.8s;
+    animation-fill-mode: both
+  }
+}

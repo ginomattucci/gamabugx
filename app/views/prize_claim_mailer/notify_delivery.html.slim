@@ -1,0 +1,9 @@
+doctype 5
+html
+  head
+  body
+    p
+      = "Olá " + @prize_claim.user.username + "."
+      | Seu prêmio foi enviado e você pode rastrear com esse código:
+      b = " #{@prize_claim.tracking_code}."
+    p Agora é só aguardar!

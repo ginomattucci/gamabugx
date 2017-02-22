@@ -1,0 +1,38 @@
+// # Sizes
+// # =================================================================
+.text-smallest { font-size: .5rem !important;} // 8px
+.text-smaller  { font-size: .75rem !important;} // 12px
+.text-small    { font-size: .875rem !important;} // 14px
+.text-large    { font-size: 1.125rem !important;} // 18px
+.text-larger   { font-size: 1.25rem !important; } // 20px
+.text-largest  { font-size: 1.5rem !important;}
+.text-mega     { font-size: 1.75rem !important;}
+.text-jumbo    { font-size: 2.25rem !important;}
+.text-giga     { font-size: 3rem !important;}
+
+// # Color
+// # =================================================================
+.lineHeight-mega { line-height: 2rem; }
+
+// # Color
+// # =================================================================
+.text-danger  { color: $danger;  }
+.text-neutral { color: $neutral; }
+.text-black   { color: #333      }
+.text-yellow  { color: $brand-yellow }
+.text-white   { color: #fff !important }
+.text-blue    {color: $brand-blue !important;}
+.text-success {color: $success; }
+.text-gray    { color: $box-title-color }
+
+// # Heading
+// # =================================================================
+.heading {
+  color: $brand-blue;
+  font-size: 2rem;
+
+  &.-spaced {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+}

@@ -1,0 +1,22 @@
+section.u-sectionSpaced.container
+  .row
+    .u-centered.column.-md-2-5
+      .formBox.u-bgWhite
+        .formBox-body
+          h2.formBox-title.heading
+            | Contato
+          = simple_form_for @contact, url: contact_path do |f|
+            dl.form.-dynamic
+              dt = f.label :name
+              dd = f.input :name, label: false, required: true, autofocus: true
+            dl.form.-dynamic
+              dt = f.label :email
+              dd = f.input :email, label: false, required: true, placeholder: ''
+            dl.form.-dynamic
+              dt = f.label :subject
+              dd = f.input :subject, label: false, required: true
+            dl.form.-dynamic
+              dt = f.label :message
+              dd = f.input :message, label: false, as: :text
+            dl.form-dynamic
+              = f.submit 'Enviar mensagem', class: 'btn -btn-block -btn-line-primary'

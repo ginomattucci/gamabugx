@@ -1,0 +1,9 @@
+doctype 5
+html
+  head
+  body
+    p
+      = "Olá " + @best_guess.winner.username + "."
+      | Você foi o autor do melhor Super Palpite no jogo
+      b = " #{@best_guess.title}."
+      = link_to " Clique aqui para reinvidicar seu prêmio.", best_guess_url(@best_guess)

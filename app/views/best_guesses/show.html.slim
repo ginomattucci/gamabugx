@@ -1,0 +1,65 @@
+.features#highlight
+  = render 'highlight', reload: true
+.container.-small.u-marginBot100
+  .row
+    .columns.-md-2-3
+      .boxCard[style="padding-top: 0"]
+        div[style="padding: 35px"]
+          .row.u-marginBot40.js-tabHandle[style="font-size: 0.9em"]
+            - if @best_guess.finished?
+              .column.-sm-1-4#winnerTab
+                button.btn.btn-tab.is-active.-btn-block.js-tab-toggle[data-target="#winner"] Vencedor
+            .column.-sm-1-4
+              button.btn.btn-tab.-btn-block.js-tab-toggle[data-target="#terms" class="#{'is-active' unless @best_guess.finished?}"] Termos
+            - if @best_guess.description
+              .column.-sm-1-4
+                button.btn.btn-tab.-btn-block.js-tab-toggle data-target="#details" Detalhes
+            .column.-sm-1-4
+                button.btn.btn-tab.-btn-block.js-tab-toggle data-target="#partners" Parceiros
+          .row.js-tabContentHandle
+            - if @best_guess.finished?
+              .column.-md-fill.js-tab-body.is-open.u-centered#winner
+                div[id="gabarito-#{@best_guess.id}"]
+                  = render 'feedback'
+            .column.-md-fill.js-tab-body.u-centered#terms[class="#{'is-open' unless @best_guess.finished?}"]
+              - unless @best_guess.finished?
+                div[id="gabarito-#{@best_guess.id}"]
+              h1.heading.u-noMarginTop Termos
+              .box-marketValue.text-large
+                span = "Valor de mercado: "
+                span.u-textBold.u-textYellow = number_to_currency @best_guess.market_price
+              .box-marketValue.text-large
+                span Custo do Palpite:
+                span.text-yellow.u-textBold
+                  |  S
+                  i.fa.fa-bitcoin
+                  = " #{@best_guess.join_cost_in_credits} "
+              .boxCard-terms
+                h5.title Regras do jogo
+                dl
+                  dt Tema
+                  dd = @best_guess.category
+                dl
+                  dt Pergunta (prévia)
+                  dd = truncate @best_guess.question, length: 21
+                dl
+                  dt Data de término
+                  dd
+                    - if @best_guess.ends_at
+                      = l @best_guess.ends_at, format: :short
+                    - else
+                      = "#{@best_guess.duration_time} minutos após começar"
+            - if @best_guess.description
+              .column.-md-fill.js-tab-body.u-centered#details
+                h1.heading.u-noMarginTop Detalhes
+                p == @best_guess.description
+            .column.-md-fill.js-tab-body.u-centered#partners
+              h1.heading.u-noMarginTop Parceiros
+              = link_to @best_guess.description_url, class: 'btn -btn-line-primary -btn-block -btn-lg', target: :_blank
+                | Acesse o site do nosso parceiro
+                i.fa.fa-external-link
+
+  .row
+    .columns.-md-fill
+      .boxCard.u-marginTop100[style="padding-top: 18px; padding-bottom: 10px"]
+        = render 'partials/games'

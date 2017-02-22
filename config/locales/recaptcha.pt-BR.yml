@@ -1,0 +1,4 @@
+pt-BR:
+  recaptcha:
+    errors:
+      verification_failed: 'Falha no recaptcha, tente novamente'

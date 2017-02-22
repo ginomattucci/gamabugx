@@ -1,0 +1,142 @@
+.btn {
+  border: 2px solid $button-white;
+  display: inline-block;
+  padding: 6px 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  vertical-align: bottom;
+  background: $button-white;
+  color: $button-gray;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .2s;
+  text-align: center;
+
+  .fa {
+    font-size: 1.4rem;
+  }
+}
+
+.btn[disabled] {
+  cursor: not-allowed;
+}
+
+.-btn-with-icon {
+  i {
+    margin-right: 5px;
+  }
+}
+
+.-btn-lg {
+  font-size: 1.5rem;
+}
+
+.-btn-block {
+  display: block;
+  min-width: 100%;
+}
+
+
+// # ========== Button header
+@include m-buttonGen(header, $brand-yellow, $brand-blueDark, true);
+
+// # ========== Button scheduled
+@include m-buttonGen(scheduled, #999, #bbb, true);
+
+.-btn-line-scheduled {
+  background: #bbb;
+  border-color: #bbb;
+  color: #999;
+  &:hover {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+  }
+}
+
+// # ========== Button primary (blue)
+@include m-buttonGen(primary, $button-yellow, $button-blue, true);
+.-btn-inverse {
+  background: $button-blue;
+  border-color: $button-blue;
+  color: #fff;
+
+  &:hover {
+    border-color: $button-blue;
+    background: $button-blue;
+  }
+}
+
+// # ========== Button secondary (yellow)
+@include m-buttonGen(secondary, #fff, $button-yellow);
+@include m-buttonGen(secondary, #fff, $button-yellow, true);
+
+// # ========== Button danger
+@include m-buttonGen(danger-inverse, $button-red, #eaeaea);
+@include m-buttonGen(danger, #fff, $button-red, true);
+@include m-buttonGen(danger, #fff, $button-red);
+
+// # ========== Button success
+// Moved to components/_box-games.scss
+
+.-btn-line-header {
+  color: #fff;
+  font-size: 85%;
+
+  .fa {
+    font-size: 130%;
+    opacity: .4;
+    transition: none;
+    color: #fff !important;
+  }
+}
+
+.-btn-superBits {
+  padding: 2px 10px 1px;
+  font-size: 120%;
+  font-weight: normal;
+
+  .fa {
+    opacity: 1;
+  }
+
+  .fa-shopping-cart {
+    font-size: 130%;
+  }
+
+  .fa-btc {
+    font-size: 110%;
+    transition: all .2s;
+  }
+
+  &:hover,
+  &:focus {
+    color: #fff;
+    background: $brand-yellow;
+    border-color: $brand-yellow;
+  }
+}
+
+.btn {
+  &.-winner {
+    padding: 2px 20px;
+  }
+}
+
+.-btn-line-scheduled {
+  &:hover,
+  &:focus {
+    color: #fff;
+  }
+}
+
+.-btn-line-primary:hover {
+  color: #fff;
+}
+
+.-btn-with-fix-margin-top {
+  margin-top: 2px;
+  @media screen and (max-width: 990px) {
+    margin-top: 9px;
+  }
+}

@@ -1,0 +1,12 @@
+pt-BR:
+  activerecord:
+    models:
+      banner:
+        one: 'Banner'
+        other: 'Banners'
+
+    attributes:
+      banner:
+        title: Título
+        image: Imagem
+        url: Link

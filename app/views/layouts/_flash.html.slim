@@ -1,0 +1,8 @@
+- for key, msg in flash
+  - flash_class = "-#{key}"
+  div[class="flash #{flash_class}"]
+    - if [I18n.t('activerecord.errors.models.auction_bid.attributes.base.must_have_credits'), I18n.t('activerecord.errors.models.best_guess.attributes.base.must_have_credits')].include?(msg)
+      = link_to msg, plans_path
+    - else
+      = msg.html_safe
+    span.flash-close &times;

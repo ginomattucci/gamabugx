@@ -1,0 +1,148 @@
+.is-modalOpen {
+  overflow: hidden;
+
+  &:before {
+    content: '';
+    display: block;
+    position: fixed;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: $zIndex-modal-overlay;
+  }
+
+  .modal-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+.modal-wrapper {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $zIndex-modal-box;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+
+  &.is-open {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+  }
+}
+
+.modal {
+  position: relative;
+  background: #fff;
+  border-radius: 6px;
+  padding: 30px 40px 40px;
+  margin: 10px 0;
+  width: 600px;
+  margin: 30px auto;
+
+  .box-badge {
+    // TODO use z-index scale
+    z-index: 1100;
+  }
+
+  &.-small {
+    width: 35%;
+  }
+
+  &.-large {
+    width: 80%;
+  }
+
+  &.-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.-best-guess {
+    padding-top: 70px;
+  }
+}
+
+.modal-title {
+  margin-top: 0;
+  font-size: 2rem;
+}
+
+.modal-close {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  font-size: 40px;
+  cursor: pointer;
+  line-height: 1;
+  color: #e9e9e9;
+  transition: all .2s;
+  z-index: $zIndexDev;
+
+  &:hover,
+  &:focus {
+    color: $brand-blue;
+  }
+}
+
+.-best-guess {
+  .modal-close {
+    right: 10px;
+    top: -6px;
+  }
+}
+
+.modal-body {
+  .modal-rules {
+    margin: 20px 0;
+    border: 1px solid #f1f1f1;
+    padding: 10px;
+
+    .title {
+      margin: 0;
+      margin-bottom: .5rem;
+      font-weight: bold;
+    }
+  }
+
+  dt {
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    font-size: .7rem;
+  }
+
+  dd {
+    color: #222;
+    margin-bottom: .8rem;
+    line-height: 1.2;
+  }
+}
+
+.modal-footer {
+  &.-with-action {
+    @include m-clearfix;
+    margin-top: 15px;
+
+    .btn {
+      float: right;
+    }
+  }
+}
+
+
+@media screen and (max-width: 860px) {
+  .modal {
+    width: 90% !important;
+  }
+}

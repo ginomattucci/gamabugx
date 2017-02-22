@@ -1,0 +1,35 @@
+- if @best_guess.finished?
+  - if @best_guess.winner.present?
+    p.text-larger
+      span.text-gray Usuário vencedor: 
+      strong = @best_guess.winner.try(:username)
+    p
+      span.text-gray Acertou 
+      strong.text-mega = @winner_attempt.score
+      span.text-gray  resposta#{'s' if @winner_attempt.score > 1}.
+      span.text-gray   Com tempo de 
+      strong.text-mega = Time.at(@winner_attempt.finish_time).utc.strftime("%Mm %Ss %3Nms")
+    hr
+  - if @attempt
+    - if @attempt.finish_time
+      p.text-larger
+        span.text-gray  Você:
+        strong  #{current_user.username}
+      p
+        span.text-gray  Acertou 
+        strong.text-mega = @attempt.score
+        span.text-gray   resposta#{'s' if @attempt.score > 1}. Seu tempo foi de 
+        strong.text-mega = Time.at(@attempt.finish_time).utc.strftime("%Mm %Ss %3Nms")
+    - else
+      p.text-larger
+        span.text-gray  Você:
+        strong  não finalizou a tempo
+    hr
+  p.text-gray Respostas do jogo:
+  - @correct_awnsers.each do |statement|
+    - if statement.image.present?
+      p[style="margin-bottom: 0px"] = image_tag statement.image.url, style: 'max-width: 100%; height: 120px'
+    p[style="color: #{statement.answer? ? 'green' : 'red'}"]
+      = statement.content
+      strong
+        |  - #{statement.answer? ? 'Verdadeira' : 'Falso'}

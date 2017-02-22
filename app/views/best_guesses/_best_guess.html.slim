@@ -1,0 +1,239 @@
+- timezone = (Time.zone.utc_offset + TZInfo::Timezone.get(Time.zone.tzinfo.name).current_period.std_offset) / 60
+
+- content_for :active_box, flush: true
+  .box-footer
+    .box-info.js-spinner.-big.-countdown
+      i.fa.fa-refresh.spinner
+    .box-info.-big.-countdown.u-hide.js-parent
+      span.little-words Termina em
+      .js-countDown.js-withActive[data-ends="#{best_guess.ends_at.to_i}" data-timezone="#{timezone}" data-starts="#{best_guess.happens_at.to_i}" data-tournament="#{best_guess.tournament? && best_guess.happens_at.nil?}" data-end-step="#{best_guess.duration_time}"]
+    .box-marketValue.u-textBold.u-textCenter
+      span = "valor de mercado: "
+      span.u-textBlack = number_to_currency best_guess.market_price
+    .box-price
+      span.text-small.u-marginRgt5 Pontos
+      span.box-price-big.value.js-priceValue = best_guess.partial_value / 100.0
+    .box-action.join-in.js-bid-action[data-costing="#{best_guess.join_cost_in_credits}" data-increase="#{number_to_currency best_guess.increase_value/100.to_f}" data-type="BestGuess"]
+      - if user_signed_in?
+        - unless params[:controller] == 'best_guess' && params[:action] == 'show'
+          - if policy(BestGuessAttempt.new(user: current_user, best_guess: best_guess)).join?
+            button.js-btn-bid-cost.btn.-btn-block.u-marginTop15[data-trig="modal" data-target="#best-guess-modal-#{best_guess.id}" class="#{best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'}"] Dar Palpite
+            = button_to 'O jogo já começou', best_guess_path(best_guess), class: 'btn -btn-inverse -btn-block u-hide js-followGame fullRoom', method: :get
+          - else
+            - attempt = best_guess.best_guess_attempts.find_by(user: current_user)
+            - if attempt && attempt.finished_at.nil?
+              = button_to 'Start', edit_best_guess_attempt_path(best_guess, attempt), class: 'btn -btn-line-danger -btn-block u-marginTop15', method: :get
+            - elsif attempt
+              span.-btn-block.boxCard-counter.u-marginTop15[disabled="true" title="Você já participou" style="padding-top: 10px; padding-bottom: 10px; border-radius: 6px;"] = "Seu tempo foi: #{Time.at(attempt.finish_time).utc.strftime("%Mm %Ss %3Nms") if attempt}"
+            - else
+              = button_to 'O jogo já começou', best_guess_path(best_guess), class: 'btn -btn-inverse -btn-block u-marginTop15 fullRoom', method: :get
+      - else
+        = button_to new_user_session_path, class: "u-marginTop15 btn #{best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'} -btn-block js-btn-bid-cost", method: :get do
+          / texto botão usuário não logado (jogo ativo)
+          = best_guess.tournament? ? 'Participar' : 'Dar Palpite'
+        = button_to 'O jogo já começou', best_guess_path(best_guess), class: 'u-marginTop15 btn -btn-inverse -btn-block u-hide js-followGame fullRoom', method: :get
+
+- content_for :scheduled_box, flush: true
+  .box-footer.-scheduled.js-boxFooter
+    .box-info.js-spinner.-big.-countdown.js-countDown.u-hide.js-withScheduled[data-ends="#{best_guess.ends_at.to_i}" data-timezone="#{timezone}" data-starts="#{best_guess.happens_at.to_i}" data-tournament="#{best_guess.tournament? && best_guess.happens_at.nil?}" data-end-step="#{best_guess.duration_time}"]
+      i.fa.fa-refresh.spinner
+    - if best_guess.tournament? && best_guess.happens_at.nil?
+      .u-textBold.js-Players[style="font-size: 2rem;text-align: center;margin-bottom: -2px; padding-top:2px"]
+        span = best_guess.best_guess_attempts.count
+        | /#{best_guess.players}
+        p[style="font-size: 0.85rem;margin: 0"] JOGADORES
+    .box-info.js-happensText.u-hide
+      - if !best_guess.tournament? && best_guess.happens_at
+        span.box-info-small Começa em
+        span.box-info-big
+          span.u-textBold = l best_guess.happens_at, format: :concise
+    .box-marketValue.u-textBold.u-textCenter
+      span = "valor de mercado: "
+      span.u-textBlack = number_to_currency best_guess.market_price
+    .box-price
+      .box-price-big
+        span S
+        span.fa.fa-btc.u-fontSize110 &nbsp;
+        span #{best_guess.join_cost_in_credits}
+    .box-action.js-bid-action[data-costing="#{best_guess.join_cost_in_credits}" data-increase="#{number_to_currency best_guess.increase_value/100.to_f}" data-tournament="#{best_guess.tournament? && best_guess.happens_at.nil?}" data-type="BestGuess"]
+      - if user_signed_in?
+        - unless params[:controller] == 'best_guess' && params[:action] == 'show'
+          - if policy(BestGuessAttempt.new(user: current_user, best_guess: best_guess)).join?
+            button.js-btn-bid-cost.btn.-btn-block.u-marginTop15[data-trig="modal" data-target="#best-guess-modal-#{best_guess.id}" class="#{best_guess.tournament? ? '-btn-line-primary -btn-inverse' : '-btn-line-scheduled'}"]
+              / botão agendado pra usuário logado(TORNEIO) (botão de participar quando o jogo ainda não começou)
+              = best_guess.tournament? ? 'inscreva-se' : 'Agendado'
+            = button_to 'O jogo já começou', best_guess_path(best_guess), class: 'btn -btn-inverse -btn-block u-hide js-followGame fullRoom', method: :get
+          - else
+            - attempt = best_guess.best_guess_attempts.find_by(user: current_user, finished_at: nil)
+            - if attempt
+              - if policy(attempt).destroy?
+                = link_to 'Cancelar inscrição', best_guess_attempt_path(best_guess, attempt), class: 'js-cancelAttemptBtn btn -btn-danger u-marginTop15', method: :delete, style: 'font-size: 1rem; width: 100%; padding-top: 10px; padding-bottom: 9px;', title: 'Disponível apenas enquanto não começar o jogo'
+              = button_to 'Start', edit_best_guess_attempt_path(best_guess, attempt), class: "btn -btn-line-danger -btn-block u-marginTop15 #{'u-hide' if policy(attempt).destroy?}", method: :get
+            - else
+              button.js-btn-bid-cost.btn.-btn-block.u-marginTop15[data-trig="modal" data-target="#best-guess-modal-#{best_guess.id}" class="#{best_guess.tournament? ? '-btn-line-primary -btn-inverse' : '-btn-line-scheduled'}"]
+                | Dar Palpite
+              = button_to 'O jogo já começou', best_guess_path(best_guess), class: 'btn -btn-inverse -btn-block u-marginTop15 fullRoom', method: :get
+      - else
+        = button_to new_user_session_path, class: "u-marginTop15 btn #{'-btn-line-primary -btn-inverse' if best_guess.tournament?} -btn-block js-btn-bid-cost", method: :get do
+          / texto botão agendado pra usuário não logado (botão de participar quando o jogo ainda não começou)
+          = best_guess.tournament? ? 'Participar' : 'Agendado'
+        = button_to 'O jogo já começou', best_guess_path(best_guess), class: 'u-marginTop15 btn -btn-inverse -btn-block u-hide js-followGame fullRoom', method: :get
+
+- content_for :winner_box, flush: true
+  .box-notify.-box-notify-success
+    .box-info.-box-info-notify.-big
+      i.fa.fa-trophy
+      .box-notify-text.-winner Venceu
+    .box-marketValue.u-textBold.u-textCenter.u-noMargin
+      span.u-textWhite = "valor de mercado: "
+      span.u-textWhite = number_to_currency best_guess.market_price
+    .box-price.-box-price-notify.-winner
+      span.box-price-big.-box-price-big-notify.js-priceValue = number_to_currency best_guess.partial_value / 100.0
+    .box-action
+      = link_to best_guess_prize_claim_path(best_guess) do
+        button.btn.-btn-block.-btn-line-success.-winner Resgatar
+
+- content_for :finished_box, flush: true
+  .box-notify.-box-notify-danger
+    .box-info.-box-info-notify
+      .box-notify-text.u-textUp.u-textBold Pontos Sumatra
+    .box-price.-box-price-notify
+      span.box-price-big.-box-price-big-notify.js-priceValue = best_guess.final_cost
+      .box-notify-discount
+        span.u-textBold.js-discount = "Prêmio "
+        span.small  Sumatra
+    .box-marketValue.u-textBold.u-textCenter
+      span.u-textWhite = "valor de mercado: "
+      span.u-textWhite = number_to_currency best_guess.market_price
+      .box-lastBidder
+        .box-lastBidder-name.js-currentWinner = best_guess.winner.try(:username) || best_guess.decorate.last_username
+        .box-lastBidder-label Vencedor
+
+- content_for :fail_box, flush: true
+  .box-notify.-box-notify-danger
+    .box-info.-big.-box-info-notify.-spaced
+      i.fa.fa-frown-o
+      .box-notify-text Finalizado
+    .box-price.-box-price-notify
+      span.box-price-small.text-white.u-textBold Infelizmente esse jogo não teve ganhador. Poderia ter sido você, sabia?
+
+.js-box.column.-md-1-3.-sm-1-3.-xs-1-2.-xxs-fill[id="best-guess-#{best_guess.id}" data-verify-url="#{best_guess_verify_status_path(best_guess)}" data-username="#{current_user.try(:username)}"]
+  article.box
+    .box-badge[class="#{best_guess.tournament? ? '-blue' : '-yellow'}"]
+      span.badge-game
+        i.fa.fa-badge
+        |  #{best_guess.tournament? ? 'Torneio' : 'Sumatra'}
+      span.badge-gameType  Palpite
+      - if best_guess.tournament?
+        span.js-Players
+          = " - "
+          span = best_guess.best_guess_attempts.count
+          | /#{best_guess.players}
+    .box-header
+      = link_to best_guess_path(best_guess) do
+        .box-image[style="background-image: url(#{best_guess.image.url})"]
+          .box-image-overlay[class="#{'-small' unless best_guess.scheduled?}"]
+            .dynamic-overlay-text
+              span.box-image-textBig = best_guess.category
+              span.box-image-textSmall = truncate best_guess.question, length: 21
+    .box-body
+      = link_to best_guess_path(best_guess) do
+        h1.box-title.-dynamic.u-textCenter
+          span = truncate(best_guess.title, length: 27)
+
+    - if best_guess.scheduled?
+      .js-hideScheduledBox
+        = content_for :scheduled_box
+      .js-hideWinnerBox.u-hide
+        = content_for :winner_box
+      .js-hideFinishBox.u-hide
+        = content_for :finished_box
+      .js-hideActiveBox.u-hide
+        = content_for :active_box
+      .js-hideFailBox.u-hide
+        = content_for :fail_box
+
+    - elsif best_guess.active?
+      .js-hideActiveBox
+        = content_for :active_box
+      .js-hideWinnerBox.u-hide
+        = content_for :winner_box
+      .js-hideFinishBox.u-hide
+        = content_for :finished_box
+      .js-hideScheduledBox.u-hide
+        = content_for :scheduled_box
+      .js-hideFailBox.u-hide
+        = content_for :fail_box
+
+    - elsif best_guess.finished?
+      - if best_guess.sold?
+        - if best_guess.winner == current_user
+          = content_for :winner_box
+        - else
+          = content_for :finished_box
+      - else
+        = content_for :fail_box
+
+.modal-wrapper[id="best-guess-modal-#{best_guess.id}"]
+  .modal.-best-guess
+    .box-badge.boxCard-badge[class="#{best_guess.tournament? ? '-blue' : '-yellow'}"]
+      span.badge-game
+        i.fa.fa-badge
+        |  Sumatra
+      span.badge-gameType  palpite
+    .modal-header
+      span.modal-close data-close="modal" &times;
+      h3.modal-title.u-textCenter = best_guess.title
+      table.box-marketValue[style="font-size: 100%; margin-bottom: 19px;width: 100%"]
+        tbody
+          - if user_signed_in?
+            tr
+              td
+                span Seu saldo:
+              td[style="text-align: right"]
+                span.u-textYellow.u-textBold
+                  |  S
+                  i.fa.fa-bitcoin
+                  span.js-user-credits = " #{current_user.credits}"
+          tr
+            td
+              span #{best_guess.tournament? ? 'Custo de inscrição' : 'Custo do palpite'}:
+            td[style="text-align: right"]
+              span.u-textYellow.u-textBold
+                |  S
+                i.fa.fa-bitcoin
+                = " #{best_guess.join_cost_in_credits} "
+          tr
+            td
+              span = 'Valor de mercado: '
+            td.text-yellow[style="text-align: right"]
+              = number_to_currency best_guess.market_price
+          - if !best_guess.tournament?
+            tr
+              td
+                span = 'Valor Atual de Pontos: '
+              td.text-yellow[style="text-align: right"]
+                = best_guess.partial_value / 100.0
+
+    .modal-body
+      .modal-rules
+        h5.title Regras do jogo
+        dl
+          dt Tema
+          dd = best_guess.category
+        dl
+          dt Pergunta (prévia)
+          dd = truncate best_guess.question, length: 20
+        dl
+          dt Termina em
+          - if best_guess.tournament?
+            dd = "#{pluralize best_guess.duration_time, 'minuto'} após começar"
+          - else
+            dd = l best_guess.ends_at, format: :long
+      - if best_guess.tournament?
+        p.u-textCenter[style="color: #888"] Este torneio começa quando #{best_guess.players} jogadores estiverem inscritos
+      p.u-textCenter
+        label
+          | Clicando em Participar você concorda com os termos acima
+      .join-in.u-textCenter
+        = button_to 'Participar', best_guess_attempts_path(best_guess), class: "btn #{best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'} -btn-block -btn-lg", method: :post

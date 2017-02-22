@@ -1,0 +1,10 @@
+doctype 5
+html
+  head
+  body
+    p
+      = "Olá #{@user.username}."
+      | Você deu algum(s) lance(s) no jogo
+      b = " #{@auction.title} "
+      | e ele foi cancelado por um problema técnico.
+    p Lamentamos o ocorrido mas lhe asseguramos que os créditos gastos foram ressarcidos à sua conta.

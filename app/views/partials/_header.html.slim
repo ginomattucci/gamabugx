@@ -1,0 +1,96 @@
+header.header
+  .container
+    .row
+      .u-clearfix
+        h1.header-brand
+          = link_to image_tag('logo.png'),  root_url
+        nav.header-menu class="#{'-noBtn' if user_signed_in?}"
+          .menu-toggle
+            span
+            span
+            span
+          ul.menu.-desktop class="#{'-noBtn' if user_signed_in?}"
+            li.menu-item
+              = link_to t('.play_now'), root_path(anchor: 'playnow'), class: 'menu-link'
+            - if user_signed_in?
+              .header-widget
+                .header-credit
+                  .small Sumabits
+                  h3.u-textYellow
+                    span.u-textBold S
+                    i.fa.fa-btc.u-fontSize110 &nbsp;
+                    span.js-user-credits = current_user.credits
+              li.menu-item.dropdown-toggle
+                a.btn.-btn-line-header.u-textLow.js-gameStarted
+                  span.fa.fa-user.u-marginRgt10
+                  span = truncate(current_user.username, length: 15)
+                  span.fa.fa-caret-down.u-marginLft10
+                ul.dropdown
+                  li.dropdown-item
+                    = link_to 'Editar Perfil', edit_user_registration_path, class: 'dropdown-link'
+                  li.dropdown-item
+                    = link_to 'Prêmios', prize_claims_path, class: 'dropdown-link'
+                  li.dropdown-item
+                    = link_to 'Histórico', purchases_path, class: 'dropdown-link'
+                  li.dropdown-item
+                    = link_to t('sign_out'), destroy_user_session_path, method: :delete, class: 'dropdown-link'
+            - else
+              li.menu-item
+                a.menu-link data-trig="modal" data-remote="#{new_user_session_path}" data-target="#sign-in-modal" = t('sign_in')
+              - unless params[:controller] == 'users/registrations' && (params[:action] == 'new' || params[:action] == 'create')
+                li.menu-item
+                  a.btn.-btn-line-header data-trig="modal" data-remote="#{new_user_registration_path}" data-target="#sign-up-modal" = t('sign_up')
+      ul.menu.-mobile class="#{'-noBtn' if user_signed_in?}"
+        li.menu-item
+          = link_to t('.play_now'), root_path(anchor: 'playnow'), class: 'menu-link'
+        - if user_signed_in?
+          li.menu-item
+            h6.u-noMargin.text-yellow.menu-link.js-gameStarted
+              = current_user.username
+              span.u-textBold  - V
+              i.fa.fa-btc.u-fontSize110 &nbsp;
+              span.js-user-credits = current_user.credits
+          li.menu-item
+            = link_to 'Prêmios', prize_claims_path, class: 'menu-link'
+          li.menu-item
+            = link_to 'Editar Perfil', edit_user_registration_path, class: 'menu-link'
+          li.menu-item
+            = link_to t('sign_out'), destroy_user_session_path, method: :delete, class: 'menu-link'
+        - else
+          li.menu-item
+            = link_to t('sign_in'), new_user_session_path, class: 'menu-link'
+          li.menu-item
+            = link_to t('sign_up'), new_user_registration_path, class: 'btn -btn-line-primary', style: 'color: #fff'
+  nav.header-submenu
+    .container
+      ul.menu.-desktop.u-textRgt
+        li.submenu-item.-dropdown.dropdown-toggle
+          = link_to 'Todos os Jogos', best_guesses_path, class: 'submenu-link'
+        li.submenu-item
+          = simple_form_for :search, url: search_path, method: :get do |f|
+            - value = params[:search].present? ? params[:search][:query] : nil
+            = f.input :query, label: false, placeholder: 'Digite a sua busca...', input_html: {value: value}
+            = f.button :button, class: 'menu-linkSearch js-toggle-search' do
+              span.fa.fa-search
+      ul.menu.-mobile
+        li.submenu-item
+          = link_to 'Todos os Jogos', best_guesses_path, class: 'submenu-link'
+        li.submenu-item
+          = simple_form_for :search, url: search_path, method: :get do |f|
+            - value = params[:search].present? ? params[:search][:query] : nil
+            = f.input :query, label: false, placeholder: 'Digite a sua busca...', input_html: {class: 'mobile-search', value: value}
+        li.submenu-item
+          a.menu-linkSearch.u-textCenter.js-toggle-search href=""
+            span.fa.fa-search
+
+/ Modals
+.modal-wrapper#sign-up-modal
+  .modal.-small
+    .modal-header
+      span.modal-close data-close="modal" &times;
+    .modal-body
+.modal-wrapper#sign-in-modal
+  .modal.-small
+    .modal-header
+      span.modal-close data-close="modal" &times;
+    .modal-body

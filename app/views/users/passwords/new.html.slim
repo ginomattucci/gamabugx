@@ -1,0 +1,14 @@
+section.u-sectionSpaced
+  .container
+    .row
+      .column.-md-2-5.u-centered
+        .formBox.u-bgWhite
+          .formBox-body
+            h2.formBox-title.heading = 'Esqueceu sua senha?'
+            = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+              = f.error_notification
+              dl.form.-dynamic
+                dt = f.label :email
+                dd = f.input :email, label: false, required: true, autofocus: true, placeholder: 'usuario@email.com'
+              = f.button :submit, "Enviar instruções para meu email", class: '-btn-line-primary -btn-block'
+            = render "users/shared/links"

@@ -1,0 +1,67 @@
+.flash {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 20px 0;
+  position: fixed;
+  width: 50%;
+  background: #fff;
+  bottom: 10px;
+  right: 10px;
+  z-index: $zIndex-flash;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+  color: #222;
+
+  &.-game_start{
+    background: $boxSuccess-background;
+    color: #fff;
+    a {
+      color: #fff;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  &.-alert,
+  &.-failure,
+  &.-recaptcha_error{
+    background: $danger;
+    color: #fff;
+    a {
+      color: #fff;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &.-success {
+    background: $success;
+    color: #fff;
+    a {
+      color: #fff;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &.-notice,
+  &.-locale {
+    background: $info;
+    color: #fff;
+    a {
+      color: #fff;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.flash-close {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+}
+

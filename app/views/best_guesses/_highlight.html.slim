@@ -1,0 +1,275 @@
+- @best_guess ||= best_guess
+- @attempt = @best_guess.best_guess_attempts.find_by(user: current_user)
+- @highlight_last_bids ||= @best_guess.best_guess_attempts
+- timezone = (Time.zone.utc_offset + TZInfo::Timezone.get(Time.zone.tzinfo.name).current_period.std_offset) / 60
+- reload ||= false
+- fix_align = @best_guess.scheduled?
+
+- content_for :scheduled_box, flush: true
+  .box-footer.-scheduled[style="margin: 0; padding-bottom: #{@attempt && policy(@attempt).destroy? ? '0px' : '14px'}; border-bottom-right-radius: 6px;"]
+    = link_to best_guess_path(@best_guess) do
+      h1.boxCard-title.gameTitle.-best-guess-high.u-textCenter[style="margin: 0; padding: 8px 0px; background: #fff"] = truncate(@best_guess.title, length: 27)
+    .boxCard-timer.-big.-colorInverse[style="margin: 0 !important"]
+      - if @best_guess.tournament? && @best_guess.happens_at.nil?
+        .u-textBold.js-Players[style="font-size: 2rem;text-align: center;margin-bottom: -2px; padding-top:2px"]
+          span = @best_guess.best_guess_attempts.count
+          | /#{@best_guess.players}
+          p[style="font-size: 0.85rem;margin: 0;#{'margin-top: -10px' if fix_align}"] JOGADORES
+      - else
+        div.boxCard-timer-text.-inverse.u-marginTop10.u-textBlack começa em
+        span.u-textBold = l @best_guess.happens_at, format: :concise
+    .box-marketValue.u-textBold.u-textCenter[style="#{'margin-top: -10px' if fix_align}"]
+      span = "valor de mercado: "
+      span.u-textBlack = number_to_currency @best_guess.market_price
+    .box-price
+      .box-price-big[style="#{'margin-bottom: 3px' if fix_align}"]
+        span S
+        span.fa.fa-btc.u-fontSize110 &nbsp;
+        span #{@best_guess.join_cost_in_credits}
+        div[style="height: 9px;"]
+    .box-action.js-bid-action[data-costing="#{@best_guess.join_cost_in_credits}" data-increase="#{number_to_currency @best_guess.increase_value/100.to_f}" data-tournament="#{@best_guess.tournament? && @best_guess.happens_at.nil?}" data-type="BestGuess"]
+      - if user_signed_in?
+        - if @attempt && @attempt.finished_at.blank?
+          - if policy(@attempt).destroy?
+            = link_to 'Cancelar inscrição', best_guess_attempt_path(@best_guess, @attempt), class: 'js-cancelAttemptBtn btn -btn-danger', method: :delete, style: 'position: absolute; bottom: -49px; font-size: 1rem; width: 89%', title: 'Disponível apenas enquanto não começar o jogo'
+          = link_to 'Start', edit_best_guess_attempt_path(@attempt.best_guess, @attempt), class: "js-continueEditButton btn -btn-line-danger -btn-block #{'u-hide' if policy(@attempt).destroy?}"
+        - elsif @attempt && @attempt.finish_time
+          span.-btn-block.boxCard-counter[disabled="true" title="Você já participou" style="padding-top: 10px; padding-bottom: 10px; border-radius: 6px;"] = "Seu tempo foi: #{Time.at(@attempt.finish_time).utc.strftime("%Mm %Ss %3Nms") if @attempt}"
+        - else
+          - if @best_guess.tournament?
+            - if @best_guess.happens_at.nil?
+              button.btn.-btn-block.js-btn-bid-cost[data-trig="modal" data-target="#best-guess-modal-#{@best_guess.id}" class="#{@best_guess.tournament? ? '-btn-line-primary -btn-inverse' : '-btn-line-scheduled'}"]
+                / botão (TORNEIO) agendado pra usuário logado
+                | Inscreva-se
+              span.btn.-btn-lg.-btn-block.js-followGame.u-hide.fullRoom[disabled="true"]O jogo já começou
+            - else
+              span.btn.-btn-lg.-btn-block.js-followGame.u-hide.fullRoom[disabled="true"]O jogo já começou
+          - else
+            button.btn.-btn-block.js-btn-bid-cost.-btn-with-fix-margin-top[data-trig="modal" data-target="#best-guess-modal-#{@best_guess.id}" class="#{@best_guess.tournament? ? '-btn-line-primary' : '-btn-line-scheduled'}"]
+              / botão (NÃO torneio) agendado pra usuário logado
+              | Agendado
+            span.btn.-btn-lg.-btn-block.js-followGame.u-hide.fullRoom[disabled="true" title="Você já participou"]Acompanhe
+      - else
+        = button_to new_user_session_path, class: "btn #{'-btn-line-primary -btn-inverse' if @best_guess.tournament?} -btn-block js-btn-bid-cost -btn-with-fix-margin-top", method: :get do
+          / texto botão usuário não logado (jogo agendado) participar
+          = @best_guess.tournament? ? 'Participar' : 'Agendado'
+
+- content_for :active_box, flush: true
+  .u-clearfix
+    = link_to best_guess_path(@best_guess) do
+      h1.boxCard-title.gameTitle.u-textCenter = truncate(@best_guess.title, length: 27)
+  .boxCard-timer.js-spinner.-big.-countdown.-colorInverse
+    i.fa.fa-refresh.spinner.u-marginTop15
+  .boxCard-timer.-big.-countdown.-colorInverse.u-hide.js-parent
+    .js-countDown.u-marginTop5.js-withActive[data-ends="#{@best_guess.ends_at.to_i}" data-timezone="#{timezone}" data-starts="#{@best_guess.happens_at.to_i}" data-reload="#{reload}" data-tournament="#{@best_guess.tournament? && @best_guess.happens_at.nil?}" data-end-step="#{@best_guess.duration_time}"]
+    span.boxCard-timer-text para encerrar a partida
+  .box-marketValue.u-textBold.u-textCenter.u-marginTop10
+    span = "Valor de mercado: "
+    span.u-textBlack = number_to_currency @best_guess.market_price
+  .box-price
+    span[style="font-size: 0.8rem"] Pontos
+    span.box-price-big.value.js-priceValue = @best_guess.partial_value / 100.0
+  .box-action.js-bid-action[data-costing="#{@best_guess.join_cost_in_credits}" data-increase="#{number_to_currency @best_guess.increase_value/100.to_f}" data-tournament="#{@best_guess.tournament? && @best_guess.happens_at.nil?}" data-type="BestGuess"]
+    - if user_signed_in?
+      - if @attempt && @attempt.finished_at.blank?
+        - if policy(@attempt).destroy?
+          = link_to 'Cancelar inscrição', best_guess_attempt_path(@best_guess, @attempt), class: 'js-cancelAttemptBtn btn -btn-danger', method: :delete, style: 'position: absolute; bottom: -49px; font-size: 1rem; width: 89%', title: 'Disponível apenas enquanto não começar o jogo'
+        = link_to 'Start', edit_best_guess_attempt_path(@attempt.best_guess, @attempt), class: "js-continueEditButton btn -btn-line-danger -btn-block #{'u-hide' if policy(@attempt).destroy?}"
+      - elsif @attempt && @attempt.finished_at.present?
+        span.-btn-block.boxCard-counter[disabled="true" title="Você já participou" style="padding-top: 10px; padding-bottom: 10px; border-radius: 6px;"] = "Seu tempo foi: #{Time.at(@attempt.finish_time).utc.strftime("%Mm %Ss %3Nms") if @attempt}"
+      - else
+        - if @best_guess.tournament?
+          - if @best_guess.happens_at.nil?
+            button.btn.-btn-block.js-btn-bid-cost[data-trig="modal" data-target="#best-guess-modal-#{@best_guess.id}" class="#{@best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'}"] Dar Palpite
+            span.btn.-btn-lg.-btn-block.js-followGame.u-hide.fullRoom[disabled="true"]O jogo já começou
+          - else
+            span.btn.-btn-lg.-btn-block.js-followGame.fullRoom[disabled="true"]O jogo já começou
+        - else
+          button.btn.-btn-block.js-btn-bid-cost[data-trig="modal" data-target="#best-guess-modal-#{@best_guess.id}" class="#{@best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'}"] Dar Palpite
+          span.btn.-btn-lg.-btn-block.js-followGame.u-hide.fullRoom[disabled="true" title="Você já participou"]Acompanhe
+    - else
+      = button_to new_user_session_path, class: "js-btn-bid-cost btn -btn-block #{@best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'}", method: :get do
+        / texto botão usuário não logado
+        = @best_guess.tournament? ? 'Participar' : 'Dar Palpite'
+      span.btn.-btn-lg.-btn-block.js-followGame.u-hide.fullRoom[disabled="true"]O jogo já começou
+
+- content_for :winner_box, flush: true
+  = link_to best_guess_path(@best_guess) do
+    h1.boxCard-title.gameTitle.u-textCenter = truncate(@best_guess.title, length: 27)
+  .boxCard-notify.box-notify.-box-notify-success.u-marginTop10.u-paddingBot15
+    h2.boxCard-info-title.-success.u-textCenter.text-success.u-textUp.u-noMargin
+      i.fa.fa-trophy.u-textWhite
+      div.boxCard-info-win.text-jumbo.u-textWhite Ganhou!
+    .boxCard-info-desc.-success.u-textCenter.u-textBold.u-textWhite
+      = "Pontos Sumatra "
+      span.js-priceValue = @best_guess.final_cost
+    .box-marketValue.u-textBold.u-textCenter
+      span.u-textWhite = "Valor de mercado: "
+      span.u-textWhite = number_to_currency @best_guess.market_price
+    .box-action.u-marginTop10[style="width: 100%; margin: 0"]
+      - if @best_guess.prize_claim.blank?
+        = link_to best_guess_prize_claim_path(@best_guess) do
+          button.btn.-btn-block.-btn-line-success.-winner Resgatar
+      - else
+        .claimed
+          span.btn.-btn-block.-btn-line-success.-winner disabled="true" Resgatado
+
+
+- content_for :finished_box, flush: true
+  = link_to best_guess_path(@best_guess) do
+    h1.boxCard-title.gameTitle.u-textCenter = truncate(@best_guess.title, length: 27)
+  .boxCard-notify.box-notify.-box-notify-danger.u-marginTop15.u-padding10
+    h2.boxCard-info-title.-sold.u-textCenter.text-danger.u-textUp.u-noMargin
+      span.text-large.u-textWhite Pontos Sumatra
+      div.-box-price-big-notify.u-textWhite.js-priceValue = @best_guess.final_cost
+    .box-notify-discount.text-mega.u-textCenter.u-textBold.u-marginBot10.u-marginTop7
+      span.u-textBold.js-discount = "Prêmio "
+      span.small  Sumatra
+    .box-marketValue.u-textBold.u-textCenter
+      span.u-textWhite = "Valor de mercado: "
+      span.u-textWhite = number_to_currency @best_guess.market_price
+    .u-textCenter.u-marginTop10
+      div.box-lastBidder.text-largest.u-textBold.u-textWhite.js-currentWinner = @best_guess.winner.username if @best_guess.winner
+      span.u-textUp.u-textBold.u-textBlack Vencedor
+
+- content_for :fail_box, flush: true
+  = link_to best_guess_path(@best_guess) do
+    h1.boxCard-title.gameTitle.u-textCenter = truncate(@best_guess.title, length: 27)
+  .boxCard-notify.box-notify.-box-notify-danger.u-marginTop15
+    h2.boxCard-info-title.u-textCenter.u-textUp.text-danger.u-marginTop10.u-paddingBot20
+      i.fa.fa-frown-o.u-textWhite
+      div.boxCard-info-win.text-jumbo.u-textWhite Finalizado
+    p.u-textCenter.u-textBold.u-textWhite.u-marginTop10[style="margin-bottom: 0"] Infelizmente esse jogo não teve nenhum ganhador!
+
+section.highlight
+  .container.-small
+    .row
+      .columns.-sm-2-3
+        .boxCard[style="padding-left: 5px; padding-right: 5px"]
+          .box-badge.boxCard-badge.-highlight.js-PlayerCountHighlight[class="js-best-guess-#{@best_guess.id} #{@best_guess.tournament? ? '-blue' : '-yellow'}"]
+            span.badge-game
+              i.fa.fa-badge
+              | #{@best_guess.tournament? ? ' Torneio ' : ' Sumatra '}
+            span.badge-gameType palpite
+            - if @best_guess.tournament?
+              span.js-Players
+                = " - "
+                span = @best_guess.best_guess_attempts.count
+                | /#{@best_guess.players}
+          .row[style="border-bottom-right-radius: 6px; #{'background: #D1D1D1;' if @best_guess.tournament? && @best_guess.scheduled?}"]
+            .columns.-md-1-2.u-hideMobile.bigger-col[style="padding: 0px;"]
+              = link_to best_guess_path(@best_guess) do
+                .boxCard-image.cover-image.flexEmbed.-is16by9[style="background-image: url(#{@best_guess.second_image? ? @best_guess.second_image.url : @best_guess.image.url})"]
+            .columns.-md-1-2.miniBox-col[style="padding: 0px;"]
+              .boxCard-info-wrapper.js-box[id="best-guess-#{@best_guess.id}" data-feedback="#{best_guess_feedback_path(@best_guess)}" data-verify-url="#{best_guess_verify_status_path(@best_guess)}" data-username="#{current_user.try(:username)}"]
+                .box-header
+                  .box-image[style="background-image: url(#{@best_guess.image.url}); height: 140px;background-size: cover;background-position: center center;"]
+                    .box-image-overlay[class="#{'-small' unless @best_guess.scheduled?}"]
+                      .dynamic-overlay-text
+                        span.box-image-textBig = @best_guess.category
+                        span.box-image-textSmall = truncate @best_guess.question, length: 21
+                - if @best_guess.scheduled?
+                  .js-hideScheduledBox
+                    = content_for :scheduled_box
+                  .js-hideActiveBox.u-hide
+                    = content_for :active_box
+                  .js-hideFinishBox.u-hide
+                    = content_for :finished_box
+                  .js-hideFailBox.u-hide
+                    = content_for :fail_box
+                  .js-hideWinnerBox.u-hide
+                    = content_for :winner_box
+                - elsif @best_guess.active?
+                  .js-hideActiveBox.u-hide
+                    = content_for :active_box
+                  .js-hideFinishBox.u-hide
+                    = content_for :finished_box
+                  .js-hideFailBox.u-hide
+                    = content_for :fail_box
+                  .js-hideWinnerBox.u-hide
+                    = content_for :winner_box
+                - elsif @best_guess.finished?
+                  - if @best_guess.sold?
+                    - if @best_guess.winner == current_user
+                      = content_for :winner_box
+                    - else
+                      = content_for :finished_box
+                  - else
+                    = content_for :fail_box
+      .columns.-md-40.-sm-1-3
+        section.ranking
+          h2.ranking-title Participantes
+          span.ranking-online
+            span.u-textBold
+              span.js-numberAttempts
+                = @highlight_last_bids.count
+              |  participantes
+            = " em #{l DateTime.now, format: :concise}"
+          ul.ranking-list.js-rankingList.-best-guess
+            - @highlight_last_bids.each do |bid|
+              li = bid.user.try(:username)
+
+.modal-wrapper[id="best-guess-modal-#{@best_guess.id}"]
+  .modal.-best-guess
+    .box-badge.boxCard-badge[class="#{@best_guess.tournament? ? '-blue' : '-yellow'}"]
+      span.badge-game
+        i.fa.fa-badge
+        |  Sumatra
+      span.badge-gameType  palpite
+    .modal-header
+      span.modal-close data-close="modal" &times;
+      h3.modal-title.u-textCenter = @best_guess.title
+      table.box-marketValue[style="font-size: 100%; margin-bottom: 19px;width: 100%"]
+        tbody
+          - if user_signed_in?
+            tr
+              td
+                span Seu saldo:
+              td[style="text-align: right"]
+                span.u-textYellow.u-textBold
+                  |  S
+                  i.fa.fa-bitcoin
+                  span.js-user-credits = " #{current_user.credits}"
+          tr
+            td
+              span #{@best_guess.tournament? ? 'Custo de inscrição' : 'Custo do palpite'}:
+            td[style="text-align: right"]
+              span.u-textYellow.u-textBold
+                |  S
+                i.fa.fa-bitcoin
+                = " #{@best_guess.join_cost_in_credits} "
+          tr
+            td
+              span = 'Valor de mercado: '
+            td.text-yellow[style="text-align: right"]
+              = number_to_currency @best_guess.market_price
+          - if !@best_guess.tournament?
+            tr
+              td
+                span = 'Valor atual de Pontos: '
+              td.text-yellow[style="text-align: right"]
+                = @best_guess.partial_value / 100.0
+
+    .modal-body
+      .modal-rules
+        h5.title Regras do jogo
+        dl
+          dt Tema
+          dd = @best_guess.category
+        dl
+          dt Pergunta (prévia)
+          dd = truncate @best_guess.question, length: 20
+        dl
+          dt Termina em
+          dd
+            - if @best_guess.ends_at
+              = l @best_guess.ends_at, format: :long
+            - else
+              = "#{@best_guess.duration_time} minutos após começar"
+      - if @best_guess.tournament?
+        p.u-textCenter[style="color: #888"] Este torneio começa quando #{@best_guess.players} jogadores estiverem inscritos
+      p.u-textCenter
+        label
+          | Clicando em Participar você concorda com os termos acima
+      .join-in.u-textCenter
+        = button_to 'Participar', best_guess_attempts_path(@best_guess), class: "btn -btn-block -btn-lg #{@best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'}", method: :post

@@ -1,0 +1,40 @@
+.searchResults {
+  height: 100%;
+}
+
+.search {
+  display: inline-block;
+
+  input {
+    border: 0;
+    background: rgba(255, 255, 255, .5);
+    font-size: .8rem;
+    transition: 1s;
+    position: relative;
+    margin: 0 10px;
+    top: -3px;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    &:hover,
+    &:focus {
+      border-color: #fff;
+    }
+
+    &::placeholder {
+      color: $brand-blue;
+    }
+  }
+}
+
+.mobile-search {
+  width: 100%;
+}
+
+.searchResults {
+  height: 100%;
+}
+
+.search_query {
+  display: inline;
+}

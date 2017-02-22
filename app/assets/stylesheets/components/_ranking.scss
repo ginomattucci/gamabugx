@@ -1,0 +1,50 @@
+.ranking {
+  background: #fff;
+  border-radius: 6px;
+  padding: 30px;
+}
+
+.ranking-title {
+  font-size: 1.8rem;
+  color: $brand-blue;
+  margin-top: 0;
+  margin-bottom: .5rem;
+}
+
+.ranking-online {
+  margin-bottom: .5rem;
+  display: block;
+  color: #999;
+  font-size: 1rem;
+}
+
+.ranking-list {
+  font-size: 1.03rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #555;
+  height: 272px;
+  @media screen and (max-width: 990px) {
+    height: 227px;
+    &.-best-guess {
+      height: 248px;
+    }
+  }
+  overflow: auto;
+
+  li {
+    margin-bottom: .2rem;
+    line-height: 1.1em;
+
+    &:first-child {
+      font-weight: 700;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .ranking {
+    display: none;
+  }
+}

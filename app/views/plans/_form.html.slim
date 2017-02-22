@@ -1,0 +1,67 @@
+= simple_form_for @purchase, url: checkouts_path, html: { class: 'js-paymentForm' } do |f|
+  = f.input :plan_id, label: false do
+    .container
+      .js-radio-toggle-wrapper
+        .row
+          = render partial: 'plans/plan', collection: @plans, locals: { f: f }
+
+  section#plans-payment.plans.features
+    .container
+      .row
+        .column.-md-4-5.u-centered
+          h1.heading.-spaced.u-textCenter Pagamento
+          h3 Selecione a opção de pagamento
+          .paymentMethod.js-radio-toggle-wrapper
+            = f.input :payment_method, label: false, collection: Payment::Base.payment_methods, as: :radio_buttons, checked: ["Cartão de Crédito", "credit_card"]
+            = f.hidden_field :konduto_user, class: 'js-kondutoUser'
+
+          .js-credit-card-wrapper
+            h3 Escolha a opção de pagamento
+            .row.-noGutter
+              = f.hidden_field :token, readonly: true, size: 64, class: 'js-paymentToken'
+              = flash[:charge_messages]
+              .column.-md-1-2.planForm-input.ico-cc
+                = f.input :cc_number, label: false, placeholder: 'Número do cartão', input_html: { autocomplete: :off, class: '-pays', data: { iugu: :number } }
+              .column.-md-1-2.planForm-input.ico-cvv
+                = f.input :cc_cvv, label: false, placeholder: 'Código de verificação', input_html: { autocomplete: :off, class: '-pays', data: { iugu: :verification_value } }
+              .column.-md-1-2.planForm-input.ico-name
+                = f.input :cc_full_name, label: false, placeholder: 'Títular do cartão', input_html: { autocomplete: :off, class: '-pays', data: { iugu: :full_name } }
+              .column.-md-1-2.planForm-input.ico-year
+                = f.input :cc_expiration, label: false, placeholder: 'MM/AA', input_html: { autocomplete: :off, class: '-pays', data: { iugu: :expiration } }
+
+            h3 Selecione a condição de pagamento
+            .row
+              .column.-md-1-3
+                = f.input :months, label: false, collection: [['1x', 1], ['2x', 2], ['3x', 3]]
+
+          hr.gray
+
+          h3 Confira seus dados de pagamento
+
+
+          .row.-noGutter
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :fullname, input_html: { disabled: f.object.fullname.present? }
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :cpf, input_html: { class: 'input-cpf', disabled: f.object.fullname.present? }
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :address
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :neighborhood
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :city
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :uf
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :country
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :zip_code, input_html: { class: 'js-cepMask'}
+            .column.-md-1-2.planForm-input.u-marginBot10
+              = f.input :phone, input_html: { class: 'js-phoneMask' }
+
+          p.u-marginBot20.text-jumbo.u-textBold.js-price-value
+            span.months
+            span.text-yellow  parcela(s) de 
+            span.price
+
+          = f.submit 'Finalizar compra', class: 'btn -btn-block -btn-line-primary -btn-lg'

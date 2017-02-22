@@ -1,0 +1,28 @@
+.features
+  = render 'highlight'
+.container.-small.u-marginBot100
+  .row
+    .columns.-md-2-3
+      .boxCard[style="padding-top: 0"]
+        div[style="padding: 35px"]
+          .row.u-marginBot40
+            - if @auction.description
+              .column.-sm-1-3
+                button.btn.btn-tab.-btn-block.js-tab-toggle data-target="#details" Detalhes
+            .column.-sm-1-3
+                button.btn.btn-tab.-btn-block.is-active.js-tab-toggle data-target="#partners" Parceiros
+          .row
+            - if @auction.description
+              .column.-md-fill.js-tab-body.is-open.u-centered#details
+                h1.heading.u-noMarginTop Detalhes
+                p == @auction.description
+            .column.-md-fill.js-tab-body.u-centered#partners
+              h1.heading.u-noMarginTop Parceiros
+              = link_to @auction.description_url, class: 'btn -btn-line-primary -btn-block -btn-lg', target: :_blank
+                | Acesse o site do nosso parceiro 
+                i.fa.fa-external-link
+
+  .row
+    .columns.-md-fill
+      .boxCard.u-marginTop100[style="padding-top: 18px; padding-bottom: 10px"]
+        = render 'partials/games'

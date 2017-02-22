@@ -1,0 +1,18 @@
+.column.-md-1-3
+  label.planBox.js-plan-to-scroll
+    = f.radio_button :plan_id, plan.id, class: 'planBox-radio'
+    h1.planBox-title = plan.title
+    .planBox-price
+      span R$
+      span.js-plans-cost = number_to_currency plan.price, unit: ''
+    .planBox-credits
+      span
+        | V
+        i.fa.fa-bitcoin
+      = plan.credits
+    .planBox-desc
+      | Retorno de
+      span  50%
+      |  Garantido
+    .planBox-action
+      a.u-textCenter.btn.-btn-line-primary.-btn-block.-btn-lg type="button" Comprar

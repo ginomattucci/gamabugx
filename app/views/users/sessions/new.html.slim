@@ -1,0 +1,18 @@
+section.u-sectionSpaced
+  .container
+    .row
+      .u-centered class="#{'column -md-2-5' unless request.xhr?}"
+        .formBox.u-bgWhite
+          .formBox-body
+            h2.formBox-title.heading
+              | LOGIN  
+            = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+              dl.form.-dynamic
+                dt = f.label :email
+                dd = f.input :email, label: false, required: false, autofocus: true, placeholder: 'usuario@email.com'
+              dl.form.-dynamic
+                = f.label :password
+                = f.input :password, label: false, required: false, placeholder: '••••••••••'
+              = f.input :remember_me, as: :boolean, label: 'Mantenha-me conectado' if devise_mapping.rememberable?
+              = f.button :submit, "Entrar", class: '-btn-line-primary -btn-block'
+            = render "users/shared/links"

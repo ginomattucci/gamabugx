@@ -1,0 +1,63 @@
+section.u-sectionSpaced
+  .container
+    .row
+      .column.-md-2-5.u-centered
+        = link_to "Voltar", :back, class: 'btn -btn-line-primary u-marginBot15'
+        .formBox.u-bgWhite
+          .formBox-body
+            h2.formBox-title.heading
+              | Editar perfil
+            = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+              = hidden_field_tag 'to', params[:to]
+              = f.error_notification
+              dl.form.-dynamic
+                dt = f.label :username
+                dd = f.input :username, label: false
+              dl.form.-dynamic
+                dt = f.label :fullname, required: true
+                dd = f.input :fullname, label: false, input_html: { disabled: resource.fullname.present? }
+              dl.form.-dynamic
+                dt = f.label :cpf, required: true
+                dd = f.input :cpf, label: false, input_html: { class: 'input-cpf', disabled: resource.cpf.present? }
+              dl.form.-dynamic
+                dt = f.label :document_id
+                dd = f.input :document_id, label: false, input_html: { class: 'input-document-id'}
+              dl.form.-dynamic
+                dt = f.label :birthday, required: true
+                dd = f.input :birthday, start_year: 1900, end_year: Date.today.year, label: false, input_html: { class: 'date-select' }
+              dl.form.-dynamic
+                dt = f.label :address, required: true
+                dd = f.input :address, label: false
+              dl.form.-dynamic
+                dt = f.label :neighborhood, required: true
+                dd = f.input :neighborhood, label: false
+              dl.form.-dynamic
+                dt = f.label :city, required: true
+                dd = f.input :city, label: false
+              dl.form.-dynamic
+                dt = f.label :uf, required: true
+                dd = f.input :uf, label: false
+              dl.form.-dynamic
+                dt = f.label :country, required: true
+                dd = f.input :country, label: false, selected: (resource.country.present? ? resource.country : 'BR')
+              dl.form.-dynamic
+                dt = f.label :zip_code, required: true
+                dd = f.input :zip_code, label: false, input_html: { class: 'js-cepMask'}
+              dl.form.-dynamic
+                dt = f.label :phone, required: true
+                dd = f.input :phone, label: false, autocomplete: :off, input_html: { class: 'js-phoneMask' }
+
+              dl.form.-dynamic
+                = f.input :email, label: false, input_html: { style: 'display: none' }
+                dt = f.label :current_password
+                dd = f.input :current_password, label: false, hint: "Precisamos da senha atual para aplicar as modificações", required: true
+              = f.button :submit, "Atualizar Perfil", class: '-btn-line-primary -btn-block'
+          hr.-danger
+          .formBox-passwordZone
+            h3.u-noMargin Trocar senha
+            span Deseja trocar sua senha? #{link_to 'Clique aqui', change_password_path}
+          .formBox-dangerZone
+            h3.u-noMargin Cancelar minha conta
+            span
+              | Não está satisfeito?
+              = link_to " Cancele sua conta", registration_path(resource_name), data: { confirm: "CUIDADO! Esta ação é terminal. Todos os dados da sua conta serão apagados. Você têm certeza?" }, method: :delete

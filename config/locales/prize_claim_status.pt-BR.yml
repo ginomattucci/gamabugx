@@ -1,0 +1,8 @@
+pt-BR:
+  enumerations:
+    prize_claim_status:
+      claimed: Resgatado
+      waiting_shipping: A Enviar
+      shipped: Enviado
+      delivered: Entregue
+      canceled: Cancelado

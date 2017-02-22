@@ -1,0 +1,33 @@
+footer.footer
+  .container.-mobile
+    .row
+      .columns.-md-fill
+        h1.footer-brand
+          = image_tag 'logo.png'
+
+        .footer-menuLft
+          ul
+            li.menu-item
+              = link_to 'Termos de uso', terms_path, class: 'menu-link'
+
+            li.menu-item
+              = link_to 'Site da Sumatra' , 'http://sumatrasurfersbeer.com/', class: 'menu-link'
+
+        nav.footer-menu
+          ul.menu
+            / TODO add real links
+            li.menu-item.-social
+              = mail_to 'sumatra@bugsystem.com.br', class: 'menu-social-link' do
+                = icon('envelope')
+            li.menu-item.-social
+              = link_to 'https://www.facebook.com/Sumatra-Surfers-Beer-1695196434128489/?fref=ts', class: 'menu-social-link' do
+                = icon('facebook')
+            li.menu-item.-social
+              = link_to 'https://www.instagram.com/SumatraSurfersBeer/', class: 'menu-social-link' do
+                = icon('instagram')
+    .row.u-marginTop20
+      .columns.-md-fill
+        .footer-copy.small.u-textCenter
+          | SUMATRA &copy; Copyright 2016 - Todos os direitos reservados. Tecnologia
+          = link_to ' BUGX', 'http://bugx.funcommerce.com.br', class: 'text-white'
+          = link_to ' by Bug System', "http://www.bugsystem.com.br", class: 'text-white'

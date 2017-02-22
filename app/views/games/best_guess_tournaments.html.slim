@@ -1,0 +1,7 @@
+section.play.u-paddingTop30.u-paddingBot100
+  h2.heading.u-textCenter.-spaced.u-paddingTop30 Torneio Palpite
+  .container.-small
+    .row
+      = render @best_guesses
+    .row.u-textCenter
+      = paginate @best_guesses

@@ -1,0 +1,8 @@
+#iugu-widget[data-account="#{Rails.application.secrets.iugu_account_id}" data-environment="#{Rails.application.secrets.iugu_env}"]
+
+
+section.features style="background: #f2f2f2;"
+  h1.heading.-spaced.u-marginBot80.u-textCenter Comprar créditos
+  .container.-small
+    .row
+      = render 'form'

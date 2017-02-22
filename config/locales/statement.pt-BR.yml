@@ -1,0 +1,13 @@
+pt-BR:
+  activerecord:
+    models:
+      statement:
+        one: 'Afirmação'
+        other: 'Afirmações'
+
+    attributes:
+      statement:
+        content: Conteúdo
+        image: Imagem
+        answer: Resposta
+        best_guess: Super Palpite

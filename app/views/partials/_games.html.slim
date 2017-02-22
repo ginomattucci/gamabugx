@@ -1,0 +1,59 @@
+.container
+  h2.heading.u-textCenter[style="margin-top: 0"] Aprenda a Jogar
+  .row
+    .column.-md-3-5.u-centered
+      p.text-larger.text-neutral.u-textCenter
+        |
+        span style="#{'display: none !important;' if params[:controller] == 'best_guesses' || params[:controller] == 'auctions'}"
+      .div style="#{'display: none !important;' if params[:controller] == 'best_guesses'}"
+        h2.u-textUp.text-yellow.u-textCenter Jogo do Click
+        p.text-larger.text-neutral.u-textCenter No Jogo do Click você disputa de forma emocionante uma oferta por um preço incrível. Para participar basta ter um saldo de virabits e dar seus Clicks nos jogos que desejar, você vai ganhar se manter seu Click até o final do contador regressivo. Mas fique esperto a cada novo Click o contador reiniciará sua contagem regressiva, dê seu Click e garanta para ele permanecer até o crônometro acabar para você ser o VENCEDOR!
+        h4.text-largest.u-textCenter.u-marginTop10
+          span.u-textBold.text-neutral Aprenda como jogar
+    .container.-small style="#{'display: none !important;' if params[:controller] == 'best_guesses'}"
+      .row
+        .columns.-md-1-3
+          .feature.-arrow
+            .feature-image.-square
+              span = image_tag('comclick1.jpg')
+            h4.feature-title.-small
+              | Começou a contagem, agora é a a melhor hora de dar seus clicks!
+        .columns.-md-1-3
+          .feature.-arrow
+            .feature-image.-square
+              span = image_tag('comclick2.jpg')
+            h4.feature-title.-small
+              | Seu Click está Ganhando? Agora é só esperar o crônometro zerar para ganhar, segure a adrenalina :O
+        .columns.-md-1-3
+          .feature.-arrow
+            .feature-image.-square
+              span = image_tag('comclick3.jpg')
+            h4.feature-title.-small
+              | Você venceu! Agora é só alegria, você já pode resgatar sua Oferta por um preço incrível /o/
+
+    .column.-md-3-5.u-centered style="#{'display: none !important;' if params[:controller] == 'auctions'}"
+      h2.u-textUp.text-yellow.u-textCenter Jogo do Palpite
+      p.text-larger.text-neutral.u-textCenter Dê seu melhor Palpite para levar uma Sumatra! Para participar basta ter um saldo de Sumabits e dar seus Palpites nos jogos que desejar, você vai ganhar se acertar o maior número de alternativa corretas no menor tempo de tentativa. Mas fique ligado quando for participar, iremos cronometrar o tempo que você vai levar para escolher suas resposta, termine o mais rápido possível e garanta sua chance de ser o VENCEDOR!
+      h4.text-largest.u-textCenter.u-marginTop10
+        span.u-textBold.text-neutral Aprenda como jogar
+    .container.-small style="#{'display: none !important;' if params[:controller] == 'auctions'}"
+      .row
+        .columns.-md-1-3
+          .feature.-arrow
+            .feature-image.-square
+              span = image_tag('compalp1.jpg')
+            h4.feature-title.-small
+              | Observe o Tema e nossa Dica sobre o desafio e dê seu palpite.
+        .columns.-md-1-3
+          .feature.-arrow
+            .feature-image.-square
+              span = image_tag('compalp2.jpg')
+            h4.feature-title.-small
+              | Realize seu palpite o mais rápido possível! Acertando o maior número de respostas corretas no menor tempo você ganha :)
+        .columns.-md-1-3
+          .feature.-arrow
+            .feature-image.-square
+              span = image_tag('compalp3.jpg')
+            h4.feature-title.-small
+              | Agora é só esperar o jogo terminar para descobrir se o seu palpite é o vencedor para levar sua Sumatra por um preço incrível /o/
+  h4.text-largest.u-textCenter.u-marginTop100

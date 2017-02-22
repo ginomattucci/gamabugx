@@ -1,0 +1,44 @@
+.slider,
+.slick-slide{
+  height: 400px;
+  width: 100%;
+  @media screen and (max-width: 990px) {
+    height: 250px;
+  }
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  img {
+    width: 100%;
+  }
+}
+
+.slick-dots {
+  list-style: none;
+  text-align: center;
+  position: relative;
+  top: -40px;
+
+  > li {
+    display: inline-block;
+    margin-left: 5px;
+
+    &.slick-active {
+      > button {
+        background: #fff;
+      }
+    }
+
+    > button {
+      font-size: 0;
+      color: transparent;
+      height: 1rem;
+      width: 1rem;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+    }
+  }
+}

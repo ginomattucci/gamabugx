@@ -1,0 +1,24 @@
+.plans {
+  position: relative;
+  margin-top: 30px;
+
+  &:after {
+    content: '';
+    height: 0;
+    padding: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 30px solid #f1f1f1;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  border-radius: 10px;
+  background: #fff;
+
+  h3 {
+    color: #999;
+  }
+}

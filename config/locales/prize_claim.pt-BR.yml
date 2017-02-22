@@ -1,0 +1,25 @@
+pt-BR:
+  activerecord:
+    models:
+      prize_claim:
+        one: 'Reinvidicação de Prêmio'
+        other: 'Reinvidicações de Prêmios'
+
+    attributes:
+      prize_claim:
+        user: Usuário
+        target: Jogo alvo
+        status: Status
+        full_name: Nome completo
+        deliver_address: Endereço de entrega
+        phone_number: Telefone (com DDD)
+        shipped_on: Enviado em
+        notes: Observações
+        tracking_code: Código de rastreio
+    errors:
+      models:
+        prize_claim:
+          attributes:
+            base:
+              not_the_winner: Você não é o vencedor
+              expired: O período para reinvindicar já passou

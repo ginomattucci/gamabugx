@@ -1,0 +1,16 @@
+pt-BR:
+  activerecord:
+    attributes:
+      best_guess_attempt:
+        created_at: 'Clicou em participar'
+        finished_at: 'Fim'
+        score: 'Acertos'
+        started_at: 'Início'
+        user: 'Usuário'
+    errors:
+      models:
+        best_guess_attempt:
+          attributes:
+            base:
+              is_not_active: Esse jogo não está ativo
+              must_have_credits: "Você não tem créditos suficientes. Adquira mais!"

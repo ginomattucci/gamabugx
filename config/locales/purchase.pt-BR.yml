@@ -1,0 +1,22 @@
+pt-BR:
+  activerecord:
+    models:
+      purchase:
+        one: Compra
+        other: Compras
+    attributes:
+      purchase:
+        cc_cvv: CVV
+        cc_expiration: Validade
+        cc_full_name: Nome do cartão
+        cc_number: Número
+        invoice: ID da fatura
+        invoice_url: URL da fatura
+        months: Parcelas
+        payment_method: Método de pagamento
+        plan: Plano
+        plan_credits: Créditos
+        plan_name: Nome do plano
+        plan_price: Preço
+        status: Status
+        user: Usuário

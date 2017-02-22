@@ -1,0 +1,50 @@
+- timezone = (Time.zone.utc_offset + TZInfo::Timezone.get(Time.zone.tzinfo.name).current_period.std_offset) / 60
+
+section.features
+  .container
+    .column.-md-4-5.u-centered
+      .row
+        .column.-md-fill.boxCard.js-box
+          .box-badge.boxCard-badge.-highlight.-best-guess[class="#{@best_guess.tournament? ? '-blue' : '-yellow'}"]
+            span.badge-game
+              i.fa.fa-badge
+              | #{@best_guess.tournament? ? ' Torneio ' : ' Super '}
+            span.badge-gameType palpite
+          .row
+            .columns.-md-2-5
+              .boxCard-image.cover-image.flexEmbed.-is16by9 style="background-image: url(#{@best_guess.image.url})"
+              .boxCard-timer.js-spinner.-big.-countdown.-colorInverse
+                i.fa.fa-refresh.spinner
+              .boxCard-timer.-big.-countdown.-colorInverse.u-hide
+                .js-countDown[data-ends="#{@best_guess.ends_at.to_i}" data-starts="#{@attempt.started_at.to_i}", data-attempt-edit="true" data-redirect-url="#{best_guess_unfinished_attempt_redirect_path(@best_guess)}"]
+                span.boxCard-timer-text para encerrar a partida
+            .columns.-md-3-5
+              h1.boxCard-title = @best_guess.title
+              .boxCard-timer.-small.-best-guess.js-countup[data-timezone="#{timezone}" data-starts="#{@attempt.started_at.to_i * 1000}"]
+              .questionBox
+                h2.questionBox-title = @best_guess.question
+                = simple_form_for @attempt, url: best_guess_attempt_path(@best_guess, @attempt) do |f|
+                  span.questionBox-desc Selecione as opções abaixo que você considera correta
+                  ul.questionBox-answers class="#{'-with-images' if @best_guess.decorate.statements_have_image?}"
+                    = f.simple_fields_for :statement_answers do |statement_answer|
+                      li.questionBox-answers-item.js-optionListSelect
+                        = statement_answer.input :statement_id, input_html: { value: statement_answer.object.statement_id }, as: :hidden
+                        = statement_answer.check_box :value, id: "answer-#{statement_answer.object.statement_id}"
+                        = statement_answer.label :value, for: "answer-#{statement_answer.object.statement_id}", class: 'questionBox-answers-answer'
+                          - if statement_answer.object.statement.image.present?
+                            = image_tag statement_answer.object.statement.image, class: 'questionBox-asnwers-image'
+                          span = statement_answer.object.statement.content
+                  .questionBox-action
+                    - if policy(@attempt).update?
+                      button.btn.-btn-block.text-largest[style="margin-bottom: 15px" class="#{@best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'}" data-disable-with="Enviando..."] Confirmar palpite
+                    - else
+                      = link_to 'Acabou o tempo. Voltar para o jogo', best_guess_path(@best_guess), class: "btn -btn-block text-largest #{@best_guess.tournament? ? '-btn-line-primary' : '-btn-line-secondary'}"
+
+javascript:
+  (function() {
+    var counter = $('.js-countup');
+    var start = parseInt(counter.data('starts'));
+    var diff = ServerDate.now() - Date.now();
+    start = start - diff;
+    counter.countdown('option', { since: new Date(start) });
+  }).call(this);

@@ -1,0 +1,19 @@
+pt-BR:
+  activerecord:
+    models:
+      admin_user:
+        one: Administrador
+        other: Administradores
+    attributes:
+      admin_user:
+        email: E-mail
+        password: Senha
+        password_confirmation: Confirmação de senha
+        created_at: Criado em
+        updated_at: Atualizado em
+        sign_in_count: Contador de sessões
+        current_sign_in_at: Última sessão
+        encrypted_password: Senha encriptada
+        last_sign_in_at: Penúltima sessão
+        current_sign_in_ip: Ip da última sessão
+        last_sign_in_ip: Ip da penúltima sessão

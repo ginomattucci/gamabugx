@@ -1,0 +1,14 @@
+section.u-sectionSpaced
+  .container
+    .row
+      .column.-md-2-5.u-centered
+        .formBox.u-bgWhite
+          .formBox-body
+            h2.formBox-title.heading Reenviar instruções de confirmação
+            = simple_form_for resource, as: resource_name, url: user_confirmation_path, html: { method: :post } do |f|
+              == devise_error_messages!
+              dl.form.-dynamic
+                dt = f.label :email
+                dd = f.input :email, label: false, required: true, autofocus: true, placeholder: 'usuario@email.com', input_html: { value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) }
+              = f.button :submit, "Enviar instruções para meu email", class: '-btn-line-primary -btn-block'
+            = render "users/shared/links"

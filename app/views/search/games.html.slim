@@ -1,0 +1,13 @@
+section#playnow.play.features.searchResults style="background: #f2f2f2;"
+  - if @auctions.any?
+    h2.heading.u-textCenter.-spaced Jogue Sumatra!
+    .container.-small
+      .row
+        = render @auctions
+  - if @best_guesses.any?
+    h2.heading.u-textCenter.-spaced Super Palpite
+    .container.-small
+      .row
+        = render @best_guesses
+  - if @auctions.none? && @best_guesses.none?
+    h2.heading.u-textCenter.-spaced Não Encontramos nenhum jogo

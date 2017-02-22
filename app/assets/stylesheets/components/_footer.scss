@@ -1,0 +1,56 @@
+.footer {
+  @include m-clearfix;
+
+  background: $footer-background;
+  padding: 50px 0 30px 0;
+  color: #fff;
+  font-weight: 700;
+  position: relative;
+}
+
+.footer-brand {
+  margin: 0;
+  text-transform: uppercase;
+  line-height: 1.5;
+  float: left;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: #66cc00;
+}
+
+.footer-menu {
+  float: right;
+}
+
+.footer-menuLft {
+  display: inline-block;
+}
+
+@media screen and (max-width: 900px) {
+  .footer {
+    text-align: center;
+  }
+
+  .footer-menuLFt {
+    .menu-item {
+      margin-top: 0;
+    }
+  }
+
+  .footer-brand,
+  .footer-copy,
+  .footer-menu,
+  .footer-menuLft {
+    display: block;
+    position: static;
+    float: none;
+    transform: translate(0,0);
+
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+
+}

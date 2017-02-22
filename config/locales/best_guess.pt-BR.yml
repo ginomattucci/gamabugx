@@ -1,0 +1,38 @@
+pt-BR:
+  activerecord:
+    models:
+      best_guess:
+        one: 'Jogo do Super Palpite'
+        other: 'Jogos dos Super Palpites'
+
+    attributes:
+      best_guess:
+        category: Tag/Categoria
+        countdown_timer: Tempo de contagem
+        description: Descrição
+        description_url: Link de descrição
+        duration_time: Duração em minutos (somente torneio)
+        ended_at: Terminou em
+        ends_at: Termina em
+        happens_at: Acontece em
+        image: Imagem
+        join_cost_in_credits: Custo da tentativa em créditos
+        market_price: Preço de mercado
+        players: Número de jogadores (somente para torneio)
+        question: Pergunta
+        second_image: Imagem secundária
+        statements: Afirmações
+        title: Título
+        tournament: Torneio
+        winner: Arrematador
+    errors:
+      models:
+        best_guess:
+          attributes:
+            base:
+              best_guess_finished: Super Palpite finalizado
+              must_have_credits: "Você não tem créditos suficientes. Adquira mais!"
+  best_guesses:
+    success: 'Sucesso!'
+    fail: 'Falha'
+    missing_credits: 'Créditos insuficientes. Adquira mais!'

@@ -1,0 +1,18 @@
+.btn-tab {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  color: #fff;
+  outline: 0;
+
+  &.is-active {
+    background: #fff;
+    color: #888;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .btn-tab {
+    border-radius: 6px;
+    margin-bottom: 5px;
+  }
+}

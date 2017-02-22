@@ -1,0 +1,26 @@
+section.features
+  .container
+    .row
+      .column.-md-fill.boxCard
+        .row
+          .columns.-md-2-5
+            .boxCard-image.cover-image.flexEmbed.-is16by9 style="background-image: url(#{@auction.image.url})"
+            .boxCard-timer.-big.-countdown
+              | 00:00
+          .columns.-md-3-5
+            h1.boxCard-title = @auction.title
+            span.boxCard-gameType.-small Super palpite
+            .questionBox
+              h2.questionBox-title Quais atores fizeram parte de Star Wars?
+              span.questionBox-desc Selecione as opções abaixo que você considera correta
+              / If use images as answer use -with-images modifier
+              ul.questionBox-answers
+                - 12.times do
+                  li.questionBox-answers-item
+                    input type="checkbox" id="pao"
+                    label.questionBox-answers-answer for="pao"
+                      / Images here
+                      /= image_tag @auction.image.url
+                      span Carlos alvare cabral lorem ispim dolor sit
+              .questionBox-action
+                button.btn.-btn-block.-btn-line-secondary.text-largest Palpite

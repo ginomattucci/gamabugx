@@ -1,0 +1,59 @@
+// # Vendors
+// # =================================================================
+@import 'sanilize';
+@import 'typ';
+@import 'trumman-grid';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+@import 'slick';
+@import 'jquery.countdown';
+
+// $nprogress-color : ;
+// $nprogress-height: ;
+@import 'nprogress';
+
+// # App style
+// # =================================================================
+
+// # ========== Variables
+@import 'variables/colors.scss';
+
+// # ========== Base
+@import 'base/base';
+@import 'base/type';
+@import 'base/utility';
+@import 'base/text-scale';
+@import 'base/z-index-scale';
+
+// # ========== Mixins
+@import 'mixins/button-generator';
+@import 'mixins/clearfix';
+
+// # ========== Components
+@import 'components/header';
+@import 'components/footer';
+@import 'components/menu';
+@import 'components/button';
+@import 'components/box-games';
+@import 'components/box-section';
+@import 'components/modal';
+@import 'components/forms';
+@import 'components/features';
+@import 'components/slider';
+@import 'components/form-box';
+@import 'components/flash';
+@import 'components/spinner';
+@import 'components/cover-image';
+@import 'components/ranking';
+@import 'components/question';
+@import 'components/header-widget';
+@import 'components/dropdown';
+@import 'components/plan-box';
+@import 'components/search';
+@import 'components/tabs';
+@import 'components/how_it_works';
+
+// # ========== Layout
+@import 'layout/home';
+@import 'layout/plans';
+@import 'layout/claims';

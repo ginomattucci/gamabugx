@@ -1,0 +1,23 @@
+pt-BR:
+  activerecord:
+    models:
+      auction_bid:
+        one: Lance de click
+        other: Lances de clicks
+    attributes:
+      auction_bid:
+        auction: Leilão
+        user: Usuário
+        value_in_credits: Valor em créditos
+    errors:
+      models:
+        auction_bid:
+          attributes:
+            base:
+              auction_finished: Jogo finalizado
+              duplicate_bids: Você não pode dar dois clicks seguidos
+              must_have_credits: "Você não tem créditos suficientes. Adquira mais!"
+  auction_bids:
+    success: 'Sucesso!'
+    fail: 'Falha'
+    missing_credits: "Você não tem créditos suficientes. Adquira mais!"

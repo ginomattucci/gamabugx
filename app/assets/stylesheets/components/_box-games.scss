@@ -1,0 +1,487 @@
+.box {
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  height: 419px;
+}
+
+// # ========== Direct descendents
+.box-body {
+//  padding: 10px 20px 8px;
+  /*padding: 13px 11px 4px;*/
+  /*8px 11px 9px*/
+  padding: 10px 11px 8px; /*tablet e celular*/
+}
+.box-footer,
+.box-notify {
+  margin: 0 15px 20px;
+}
+
+.box-footer {
+  &.-scheduled {
+    background: $box-info-background;
+    margin: 0;
+    padding: 0 15px 20px;
+
+    .box-info {
+      padding-top: 8px;
+    }
+  }
+}
+
+// # ========== Change size of box to fit with "mini box"
+
+.bigger-col {
+  width: 51.5%;
+  float: left;
+}
+
+.miniBox-col {
+  @media screen and (min-width: 768px) {
+    width: 48.5%;
+    float: left;
+  }
+}
+
+// # ========== Box images
+.box-header {
+  background: #999;
+}
+
+.box-image {
+  height: 140px;
+  width: 100%;
+  background-position: center center;
+  background-size: cover;
+  position: relative;
+}
+
+.box-image-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(51, 51, 51, .7);
+  text-align: center;
+
+  &.-small {
+      top: 25%;
+      bottom: 25%;
+  }
+
+  .dynamic-overlay-text {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      transform: translateY(-50%);
+
+      span {
+        margin: 0;
+      }
+  }
+}
+
+.box-image-textBig {
+  font-size: 2rem;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+  line-height: 1;
+  margin-top: 40px;
+}
+
+.box-image-textSmall {
+  color: #fff;
+  font-weight: 700;
+}
+
+// # ========== Title
+.box-title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: $box-title-color;
+  height: 26px;
+
+  &.-dynamic {
+    position: relative;
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      right: 0;
+    }
+  }
+
+  &:hover,
+  &:focus {
+    color: $brand-blue;
+  }
+}
+
+
+// # ========== Price
+.box-price {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+  padding: 2px 0;
+  color: $box-price-color;
+
+  &.-danger { color: $danger; }
+}
+
+.box-price-small {
+  display: block;
+  margin: 0;
+  margin-top: -8px;
+  text-transform: lowercase;
+  font-size: 14px;
+  color: inherit;
+
+  &.-winning {
+    color: $success !important;
+  }
+}
+
+.box-price-big {
+  color: #333;
+}
+
+// # ========== Informations
+.box-info {
+  width: calc(100% + 40px);
+  margin-left: -20px;
+  background: $box-info-background;
+  text-align: center;
+  padding: 10px 0px 5px;
+  height: 67px;
+  color: $box-info-color;
+  border: 0;
+
+  &.-big {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 47px;
+  }
+
+  &.-countdown {
+    color: #333;
+    background: $box-info-background;
+  }
+
+  &.-warning {
+    color: $danger;
+  }
+
+  .little-words {
+    font-size: .8rem;
+    font-weight: 700;
+    display: block;
+    line-height: 0;
+    margin-top: 4px;
+    margin-bottom: 3px;
+  }
+}
+
+.box-info-small {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: .85rem;
+  color: #333;
+}
+
+.box-info-big {
+  display: block;
+  line-height: 2rem;
+  font-size: 2rem;
+  color: inherit;
+  font-weight: 300;
+  color: #333;
+}
+
+// # ========== Buttons
+.box-action {
+  .btn {
+    font-size: 1.3rem;
+  }
+}
+.highlight {
+  .box-action {
+    margin: 0px 5%;
+    min-width: auto;
+    width: 90%;
+  }
+}
+
+// # ========== Badge
+.box-badge {
+  text-align: center;
+  position: relative;
+  width: 100%;
+  top: 0;
+  height: 36px;
+  z-index: $zIndex-gameBadge;
+  text-transform: uppercase;
+  padding: 6px 0;
+  font-size: 1rem;
+  color: $brand-blueDark;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+
+  &:before {
+    content: '';
+    height: 0;
+    width: 0;
+    border: 10px solid transparent;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+  }
+
+  &.-highlight {
+    &:before {
+      left: 76%;
+    }
+    &.-best-guess {
+      &:before {
+        left: 69%;
+      }
+    }
+  }
+
+  &.-blue {
+    background-color: $brand-blue;
+    color: #fff;
+
+    &:before {
+      @media screen and (min-width: 990px) {
+        border-top-color: $brand-blue;
+      }
+    }
+
+    .fa-badge:before {
+      content: "\f274";
+    }
+  }
+
+  &.-yellow {
+    background: $brand-yellow;
+    left: 0;
+
+    &:before {
+      @media screen and (min-width: 990px) {
+        border-top-color: $brand-yellow;
+      }
+    }
+
+    .fa-badge:before {
+      content: "\f005";
+    }
+  }
+}
+
+// fix countdown.jquery style ¬¬
+.is-countdown {
+  background: transparent;
+  border-color: transparent;
+}
+
+.badge-game {
+  color: currentColor;
+  opacity: .7;
+}
+
+.badge-gameType {
+  font-weight: 700;
+}
+
+// # ========== Notification
+.box-notify {
+  border-radius: 6px;
+  padding: 10px 20px 12px;
+
+  .-box-info-notify {
+    height: auto;
+    .fa {
+      font-size: 2rem;
+    }
+
+    &.-spaced {
+      padding: 0 0 16px 0;
+    }
+  }
+
+  &.-box-postponed {
+    padding: 0;
+    height: auto;
+  }
+
+  .-box-price-small-notify {
+    text-transform: capitalize;
+    color: #fff;
+  }
+
+  .box-marketValue {
+    margin-bottom: 0;
+  }
+}
+
+.box-notify-text {
+  margin-top: -0.25rem;
+
+  &.-winner {
+    margin-top: 0.1rem;
+  }
+}
+
+.-box-notify-success {
+  color: $boxSuccess-background;
+  background: $boxSuccess-background;;
+
+  .box-notify-text {
+    line-height: 1;
+  }
+
+  .-box-info-notify {
+    padding: 0;
+    background: $boxSuccess-background;
+    color: #fff;
+    line-height: 1rem;
+  }
+
+  .-box-price-notify {
+    padding: 9px 0;
+
+    &.-winner {
+      padding: 0;
+      line-height: 1rem;
+      padding: 0.294rem 0px 0.6rem;
+    }
+  }
+
+  .-box-price-big-notify {
+    color: $boxSuccess-price-color;
+  }
+}
+
+.-box-notify-danger {
+  color: $danger;
+  background: $boxDanger-background;
+  min-height: 184px;
+
+  .box-notify-text {
+    line-height: 1.2;
+  }
+
+  .-box-info-notify {
+    background: $boxDanger-background;
+    color: #fff;
+  }
+
+  .-box-price-notify {
+    padding: 0;
+  }
+
+  .-box-price-big-notify {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    color: #fff;
+  }
+
+  .-box-price-small-notify {
+    font-size: 1.5rem;
+  }
+
+  .box-marketValue {
+    margin-top: -10px;
+  }
+}
+
+// # ========== Discount
+.box-notify-discount {
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+  color: #fff;
+  margin: 5px 0;
+
+  .fa {
+    font-size: 90%;
+  }
+
+  .small {
+    color: #333;
+    font-size: 85%;
+  }
+}
+
+// # ========== Last Bidder
+.box-lastBidder {
+  font-size: .9rem;
+  line-height: 1rem;
+  color: #fff;
+  margin-top: 5px;
+}
+
+.box-lastBidder-label {
+  color: #333;
+  text-transform: uppercase;
+}
+
+// # ========== Market Value
+.box-marketValue {
+  color: $box-title-color;
+  margin-top: 5px;
+  font-size: 80%;
+  margin-bottom: -5px;
+}
+
+.box-status {
+  font-weight: bold;
+  background: #D8D8D8;
+  color: #888;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 1.5rem;
+  position: relative;
+  top: -25px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.box-status-text {
+  color: #222;
+}
+
+// Cor do botão de game over / já começou
+.fullRoom {
+  color: #909090;
+  background: $button-white;
+  border-color: $button-white;
+  &:hover {
+    color: #909090;
+    background: $button-white;
+    border-color: $button-white;
+  }
+}
+// Fim Cor do botão de game over / já começou
+
+// # ========== Button success
+@include m-buttonGen(success, #1bbc9b, #fff, true);
+@include m-buttonGen(success, #fff, $button-green);
+
+.js-btn-bid-cost {
+  span {
+    pointer-events: none;
+  }
+}

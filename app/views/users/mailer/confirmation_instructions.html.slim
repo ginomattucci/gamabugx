@@ -1,0 +1,3 @@
+p Olá #{@email}
+p Você pode confirmar sua conta clicando no link abaixo:
+p == link_to 'Confirmar minha conta', user_confirmation_url(confirmation_token: @token)

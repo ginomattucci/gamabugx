@@ -1,0 +1,25 @@
+pt-BR:
+  attributes:
+    address: 'Endereço completo'
+    city: 'Cidade'
+    country: 'País'
+    cpf: 'CPF'
+    created_at: 'Criado em'
+    fullname: 'Nome completo'
+    increase_value: 'Valor de aumento'
+    neighborhood: 'Bairro'
+    phone: 'WhatsApp'
+    uf: 'Estado'
+    updated_at: 'Atualizado em'
+    zip_code: 'CEP'
+  sign_in: 'Acesse sua Conta'
+  sign_up: 'Cadastrar-se'
+  sign_out: 'Sair'
+  time:
+    formats:
+      all: "%a, %d %b %Y %I:%M:%S %p %Z"
+      concise: "%d/%m - %H:%M"
+en:
+  sign_in: 'Sign in'
+  sign_up: 'Sign up'
+  sign_out: 'Sign out'

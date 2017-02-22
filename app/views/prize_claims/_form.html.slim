@@ -1,0 +1,43 @@
+section.u-sectionSpaced.container
+  .row
+    .u-centered.column.-md-2-5
+      .formBox.u-bgWhite
+        .formBox-body
+          h2.formBox-title.heading
+            | Reinvindicação de Prêmio
+          = simple_form_for @prize_claim do |f|
+            = f.input :target_id, as: :hidden
+            = f.input :target_type, as: :hidden
+            dl.form.-dynamic
+              dt = f.label :full_name
+              dd = f.input :full_name, label: false
+            dl.form.-dynamic
+              dt = f.label :deliver_address
+              dd = f.input :deliver_address, label: false
+            dl.form.-dynamic
+              dt = f.label :phone_number
+              dd = f.input :phone_number, label: false, input_html: { class: 'js-phoneMask'}
+            dl.form.-dynamic
+              dt = f.label :notes
+              dd = f.input :notes, label: false
+
+            dl.form.-dynamic
+              dt = f.label :cpf
+              dd = f.input :cpf, label: false, input_html: { class: 'input-cpf'}
+            dl.form.-dynamic
+              dt = f.label :neighborhood
+              dd = f.input :neighborhood, label: false
+            dl.form.-dynamic
+              dt = f.label :city
+              dd = f.input :city, label: false
+            dl.form.-dynamic
+              dt = f.label :uf
+              dd = f.input :uf, label: false
+            dl.form.-dynamic
+              dt = f.label :country
+              dd = f.input :country, label: false
+            dl.form.-dynamic
+              dt = f.label :zip_code
+              dd = f.input :zip_code, label: false, input_html: { class: 'js-cepMask'}
+            dl.form-dynamic
+              dd = f.submit 'Reinvindicar', class: 'btn -btn-block -btn-line-primary'

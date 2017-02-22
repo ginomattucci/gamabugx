@@ -1,0 +1,26 @@
+pt-BR:
+  activerecord:
+    models:
+      auction:
+        one: 'Jogo do click'
+        other: 'Jogos do click'
+
+    attributes:
+      auction:
+        bid_cost_in_credits: Custo do lance em créditos
+        canceled: Cancelado
+        countdown_timer: Tempo de contagem
+        credits_by_attempt: Créditos por buyin
+        description: Descrição
+        description_url: Link de descrição
+        ended_at: Terminou em
+        final_cost: Custo final
+        happens_at: Acontece em
+        image: Imagem
+        join_cost_in_credits: Custo do buyin
+        market_price: Preço de mercado
+        players: Número de jogadores (somente para torneios)
+        reactivate: Reativar
+        title: Título
+        tournament: Torneio
+        winner: Arrematador

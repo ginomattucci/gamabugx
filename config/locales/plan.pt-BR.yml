@@ -1,0 +1,12 @@
+pt-BR:
+  activerecord:
+    models:
+      plan:
+        one: Plano
+        other: Planos
+    attributes:
+      plan:
+        credits: Valor de créditos
+        image: Imagem
+        price: Preço
+        title: Nome do plano

@@ -1,0 +1,20 @@
+pt-BR:
+  activerecord:
+    models:
+      user:
+        one: 'Usuário'
+        other: 'Usuários'
+
+    attributes:
+      user:
+        username: Username
+        password: Senha
+        current_password: Senha atual
+        password_confirmation: Confirme sua senha
+        email_confirmation: Confirme seu email
+        blocked: Bloqueado?
+        credits: Créditos
+        cpf: CPF
+        document_id: RG
+        address: Endereço
+        birthday: Aniversário

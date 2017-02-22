@@ -1,0 +1,36 @@
+.cover-image {
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+.flexEmbed {
+  display: block;
+  overflow: hidden;
+  position: relative;
+
+  &:before {
+    content: "";
+    display: block;
+    width: 100%;
+  }
+
+  &.-is3by1:before {
+    padding-bottom: 33.33333%;
+  }
+
+  &.-is2by1:before {
+    padding-bottom: 50%;
+  }
+
+  &.-is16by9:before {
+    padding-bottom: 56.25%;
+  }
+
+  &.-is4by3:before {
+    padding-bottom: 75%;
+  }
+}
+
+

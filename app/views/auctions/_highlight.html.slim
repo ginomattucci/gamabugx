@@ -1,0 +1,323 @@
+- timezone = (Time.zone.utc_offset + TZInfo::Timezone.get(Time.zone.tzinfo.name).current_period.std_offset) / 60
+- @auction = auction if defined?(auction)
+- user_have_credit = @auction.auction_attempts.where(user: current_user).where('"auction_attempts"."credits" > 0').exists?
+- user_can_rebuy = @auction.auction_attempts.where(user: current_user).exists? && @auction.auction_attempts.where(user: current_user).count < @auction.max_attempts
+- user_subscribed = user_have_credit || user_can_rebuy
+
+/ box de vencedor
+- content_for :winner_box, flush: true
+  .box-notify.-box-notify-success
+    .box-info.-box-info-notify.-big
+      i.fa.fa-trophy
+      .box-notify-text.-winner Venceu
+    .box-marketValue.u-textBold.u-textCenter
+      span.u-textWhite = "valor de mercado: "
+      span.u-textWhite = number_to_currency @auction.market_price
+    .box-price.-box-price-notify.-winner
+      span.box-price-big.-box-price-big-notify.js-priceValue = number_to_currency @auction.partial_value / 100.0
+    .box-action
+      - if @auction.prize_claim.blank?
+        = link_to 'Resgatar', auction_prize_claim_path(@auction), class: 'btn -btn-block -btn-line-success -winner'
+      - else
+        .claimed
+          span.btn.-btn-block.-btn-line-success.-winner disabled="true" Resgatado
+
+/ box de finalizado
+- content_for :finished_box, flush: true
+  .box-notify.-box-notify-danger
+    .box-info.-box-info-notify
+      .box-notify-text.u-textUp.u-textBold Vendido por
+    .box-price.-box-price-notify
+      span.box-price-big.-box-price-big-notify.js-priceValue = number_to_currency @auction.partial_value / 100.0
+      .box-notify-discount
+        i.fa.fa-tag.u-marginRgt5
+        span.u-textBold.js-discount = "#{@auction.discount_percentage}%"
+        span.small  de desconto
+    .box-marketValue.u-textBold.u-textCenter
+      span.u-textWhite = "valor de mercado: "
+      span.u-textWhite = number_to_currency @auction.market_price
+      .box-lastBidder
+        .box-lastBidder-name.js-currentWinner = @auction.decorate.last_bidder
+        .box-lastBidder-label Vencedor
+
+/ box de adiado
+- content_for :fail_box, flush: true
+  .box-notify.-box-notify-danger
+    .box-info.-big.-box-info-notify.-spaced
+      i.fa.fa-frown-o
+      .box-notify-text Finalizado
+    .box-price.-box-price-notify
+      span.box-price-small.text-white.u-textBold  Infelizmente esse jogo não teve ganhador. Poderia ter sido você, sabia?
+/ box de cancelado
+- content_for :canceled_box, flush: true
+  .box-notify.-box-notify-danger
+    .box-info.-big.-box-info-notify.-spaced
+      i.fa.fa-frown-o
+      .box-notify-text Cancelado
+    .box-price.-box-price-notify
+      span.box-price-small.text-white.u-textBold Este jogo foi cancelado pelo FazVirar.
+
+section.js-box.js-counterBox.highlight[id="bidbox-#{@auction.id}" data-timer="#{@auction.countdown_timer}" data-last-bid="#{@auction.bids.last.try(:created_at).try(:to_i)}" data-starts="#{@auction.happens_at.to_i}" data-verify-url="#{auction_verify_status_path(@auction)}" data-ends="#{@auction.ended_at.to_i}" data-username="#{current_user.try(:username)}" data-subscribed="#{user_subscribed}"]
+  .container.-small
+    .row
+      .columns.-sm-2-3
+        section.boxCard[style="padding-left: 5px; padding-right: 5px"]
+          .box-badge.boxCard-badge.-highlight[class="#{@auction.tournament? ? '-blue' : '-yellow'}"]
+            span.badge-game
+              i.fa.fa-badge
+              |  #{@auction.tournament? ? 'torneio' : 'super'}
+            span.badge-gameType  click
+            - if @auction.tournament?
+              - if @auction.happens_at.nil?
+                span.js-Players
+                  = " - "
+                  span = @auction.auction_attempts.count
+                  | /#{@auction.players}
+            .pull-right.js-creditsAttempt[style="margin-right: 8px"]
+              - if @auction.tournament? && @attempt
+                = @attempt.credits
+          .row
+            .columns.-md-1-2.u-hideMobile.bigger-col[style="padding: 0px;"]
+              = link_to auction_path(@auction) do
+                .boxCard-image.cover-image.flexEmbed.-is16by9[style="background-image: url(#{@auction.second_image? ? @auction.second_image.url : @auction.image.url})"]
+            .columns.-md-1-2.miniBox-col[style="padding: 0px;"]
+              .boxCard-auction-wrapper
+                = link_to auction_path(@auction) do
+                  div.boxCard-title.-dynamic[style="background-image: url(#{@auction.image.url}); height: 140px;background-size: cover;background-position: center center;"]
+                    - if @auction.scheduled?
+                      .box-image-overlay
+                = link_to auction_path(@auction) do
+                  h1.boxCard-title.gameTitle.u-textCenter
+                    span = truncate(@auction.title, length: 37)
+                article.boxCard-auction.u-noRadius
+                  - if @auction.finished?
+                    .u-padding10
+                      - if user_signed_in? && current_user == @auction.winner
+                        = content_for :winner_box
+                      - elsif @auction.winner
+                        = content_for :finished_box
+                      - else
+                        = content_for :fail_box
+                  - else
+                    .js-hideWinnerBox.u-hide.u-padding10
+                      = content_for :winner_box
+                    .js-hideFinishBox.u-hide.u-padding10
+                      = content_for :finished_box
+                    .js-hideFailBox.u-hide.u-padding10
+                      = content_for :fail_box
+                    .js-hideCanceledBox.u-hide.u-padding10
+                      = content_for :canceled_box
+                    .box-footer.u-noMargin.js-boxFooter.auctionHighlight[class="#{'-scheduled' if @auction.scheduled?}"]
+                      .box-info.js-spinner.-big.-countdown
+                        i.fa.fa-refresh.spinner
+                      .box-info.js-countdown.-big.-countdown.u-hide[data-timezone="#{timezone}" data-started="#{@auction.happens_at.present?}" data-tournament="#{@auction.tournament? && @auction.credits_by_attempt}" data-subscribed="#{user_subscribed}"]
+                      - if @auction.tournament? && @auction.happens_at.nil?
+                        .u-textBold.js-Players[style="font-size: 2rem;text-align: center;margin-bottom: -2px; padding-top:2px"]
+                          span = @auction.auction_attempts.count
+                          | /#{@auction.players}
+                          p[style="font-size: 0.85rem;margin: 0"] JOGADORES
+                      .box-info.js-happensText.u-hide.u-paddingTop5
+                        - if !@auction.tournament? && @auction.happens_at
+                          span.box-info-small Começa em
+                          span.box-info-big
+                            span.u-textBold = l @auction.happens_at, format: :concise
+                      .box-marketValue.u-textBold.u-textCenter
+                        span = "valor de mercado: "
+                        span.u-textBlack = number_to_currency @auction.market_price
+                      .box-price
+                        span[style="font-size: 0.8rem"] por
+                        span.box-price-big.js-priceValue = number_to_currency @auction.partial_value / 100.0
+                        span.box-price-small.js-currentWinner[class="#{'-winning' if user_signed_in? && @auction.decorate.last_bidder == current_user.username}"] = @auction.decorate.last_bidder
+                      .box-action.auctionHighlight.js-bid-action[data-costing="#{@auction.tournament? ? @auction.join_cost_in_credits : @auction.bid_cost_in_credits}" data-increase="#{number_to_currency @auction.increase_value/100.to_f}" data-type="Auction" data-subscribed="#{user_subscribed}" data-tournament="#{@auction.tournament? && @auction.credits_by_attempt}"]
+                        - if @auction.active? || @auction.scheduled?
+                          - if user_signed_in?
+                            - if @auction.tournament? && !user_subscribed
+                              - if @auction.players > @auction.number_of_players
+                                / aqui tem o botão azul de agendado
+                                / o botão de participar pro usuário logado(TORNEIO), o verificar o texto também no data-default-val que tem na linha abaixo
+                                button.js-btn-bid-cost.btn.-btn-line-scheduled.-btn-block.subscribe[class=" #{'-btn-inverse' if @auction.active?}" data-trig="modal" data-target="#auction-modal-#{@auction.id}" data-default-val="Inscreva-se"]
+                                  | Inscreva-se
+                                = button_to auction_path(@auction), method: :get, class: 'btn -btn-line-scheduled -btn-block subscribe fullRoom js-FullRoom u-hide', disabled: true do
+                                  | O jogo já começou
+                                button.js-RebuyModal.u-hide.btn.-btn-line-primary.-btn-block.subscribe[data-trig="modal" data-target="#auction-re-modal-#{@auction.id}"]
+                                  | Re-entrada
+                              - else
+                                - attempt_exist = @auction.auction_attempts.where(user: current_user).exists?
+                                = button_to auction_path(@auction), method: :get, class: "btn -btn-line-scheduled -btn-block subscribe #{'js-btn-bid-cost' if attempt_exist} fullRoom js-FullRoom #{'-btn-success' if @auction.auction_attempts.where(user: current_user).exists?}", disabled: true do
+                                  - if attempt_exist
+                                    - if @auction.decorate.last_bidder == current_user.username
+                                      | Ganhando
+                                    - else
+                                      | Game over
+                                  - else
+                                    | O jogo já começou
+                              button.js-RebuyModal.u-hide.btn.-btn-line-primary.-btn-block.subscribe[data-trig="modal" data-target="#auction-re-modal-#{@auction.id}"]
+                                | Re-entrada
+                            - else
+                              - if user_can_rebuy && !user_have_credit
+                                button.js-RebuyModal.btn.-btn-line-primary.-btn-block.subscribe[data-trig="modal" data-target="#auction-re-modal-#{@auction.id}"]
+                                  | Re-entrada
+                              - else
+                                = button_to auction_bids_path(@auction), remote: true, class: "btn -btn-block #{@auction.tournament? ? '-btn-line-primary' : '-btn-line-scheduled'} js-btn-bid-cost #{'u-hide' if policy(@auction).cancel_attempt? && @attempt}  #{'-btn-success' if @auction.decorate.last_bidder == current_user.try(:username)}", data: { default_val: (@auction.tournament? || @auction.active? ? 'Click' : 'Agendado'), val: (@auction.decorate.last_bidder == current_user.try(:username) ? 'Ganhando' : (@auction.tournament? || @auction.active? ? 'Click' : 'Agendado')) }
+                                  | #{@auction.decorate.last_bidder == current_user.try(:username) ? 'Ganhando' : (@auction.tournament? || @auction.active? ? (@auction.happens_at.nil? && user_subscribed ? 'Inscrito' : 'Click') : 'Agendado')}
+                                button.js-RebuyModal.u-hide.btn.-btn-line-primary.-btn-block.subscribe[data-trig="modal" data-target="#auction-re-modal-#{@auction.id}"]
+                                  | Re-entrada
+                            - if @auction.tournament?
+                              button.u-hide.js-endRebuy.btn.-btn-line-scheduled.-btn-block.subscribe
+                                | Game over
+                              button.js-RebuyModal.u-hide.btn.-btn-line-primary.-btn-block.subscribe[data-trig="modal" data-target="#auction-re-modal-#{@auction.id}"]
+                                | Re-entrada
+                              - if policy(@auction).cancel_attempt? && @attempt
+                                = link_to 'Cancelar inscrição', auction_attempt_path(@attempt), class: 'js-cancelAttemptBtn btn -btn-danger', method: :delete, style: 'font-size: 1rem; width: 100%', title: 'Disponível apenas enquanto não começar o jogo'
+                          - else
+                            / o botão de participar pro usuário NÃO logado, o verificar o texto também no data-default-val que tem na linha abaixo
+                            / botão pro usuário não logado do super click (leilão) - que é azul ou cinza, dependendo do contexto
+                            = button_to new_user_session_path, class: "js-btn-bid-cost btn #{'-btn-line-primary' if @auction.tournament?} #{'-btn-inverse' if @auction.tournament? && @auction.number_of_players < @auction.players} -btn-block", method: :get, data: { default_val: (@auction.tournament? || @auction.active? ? 'Participar' : 'Agendado') }
+                              = @auction.tournament? || @auction.active? ? 'Participar' : 'Agendado'
+                            button.js-RebuyModal.u-hide.btn.-btn-line-primary.-btn-block.subscribe[data-trig="modal" data-target="#auction-re-modal-#{@auction.id}"]
+                              | Re-entrada
+
+      .columns.-md-40.-sm-1-3
+        section.ranking
+          h2.ranking-title Últimos Clicks
+          span.ranking-online.u-hide
+            span.u-textBold
+              span.js-numberBids
+                = @highlight_last_bids.count
+              |  clicks
+            = " em #{l @auction.happens_at, format: :concise}" if !@auction.tournament? && @auction.happens_at
+          ul.ranking-list.js-rankingList
+            - @highlight_last_bids.each do |bid|
+              li = bid.user.try(:username)
+            - if @auction.tournament?
+              li &nbsp;
+              li
+                strong Participantes:
+              - @auction.auction_attempts.joins(:user).group('"users"."username"').count.keys.each do |username|
+                li = username
+          / this div is a blank space because of ranking-online child with .u-hide
+          div[style="height: 32px"]
+
+/ modal de participar de leilão click
+.modal-wrapper[id="auction-modal-#{@auction.id}"]
+  .modal.-best-guess
+    .box-badge.boxCard-badge[class="#{@auction.tournament? ? '-blue' : '-yellow'}"]
+      span.badge-game
+        i.fa.fa-badge
+        |  #{@auction.tournament? ? 'torneio' : 'super'}
+      span.badge-gameType  click
+    .modal-header
+      span.modal-close[data-close="modal"] &times;
+      h3.modal-title.u-textCenter = @auction.title
+      table.box-marketValue[style="font-size: 100%; margin-bottom: 19px;width: 100%"]
+        tbody
+          - if user_signed_in?
+            tr
+              td
+                span Seu saldo:
+              td[style="text-align: right"]
+                span.u-textYellow.u-textBold
+                  |  V
+                  i.fa.fa-bitcoin
+                  span.js-user-credits = " #{current_user.credits}"
+          tr
+            td
+              span Custo de inscrição:
+            td[style="text-align: right"]
+              span.text-yellow.u-textBold
+                |  V
+                i.fa.fa-bitcoin
+                = " #{@auction.join_cost_in_credits} "
+          tr
+            td
+              span = "Valor de mercado: "
+            td[style="text-align: right"]
+              span.u-textYellow = number_to_currency @auction.market_price
+          tr
+            td
+              span Valor de aumento:
+            td[style="text-align: right"]
+              span.text-yellow
+                = " #{pluralize(@auction.increase_value, 'centavo')}"
+          - if @auction.tournament?
+            tr
+              td
+                span Créditos de partida:
+              td[style="text-align: right"]
+                span.text-yellow
+                  = " #{@auction.credits_by_attempt}"
+          - if @auction.max_attempts.to_i > 0
+            tr
+              td
+                .box-marketValue[style="font-size: 100%; margin: 0"]
+                  span Número de re-entradas:
+              td[style="text-align: right"]
+                span.text-yellow.js-maxAttempts[data-attempts="#{@auction.max_attempts}"]
+                  = @auction.max_attempts - @auction.auction_attempts.where(user: current_user).count - 1
+          tr
+            td[style="font-size: 100%"]
+              span Tempo de contagem:
+            td[style="text-align: right"]
+              span.text-yellow
+                = pluralize @auction.countdown_timer, 'segundo'
+          - if @auction.tournament?
+            tr
+              td
+                span Número de jogadores:
+              td[style="text-align: right"]
+                span.text-yellow
+                  = " #{@auction.number_of_players}/#{@auction.players}"
+    .modal-body
+      - if @auction.tournament?
+        p.u-textCenter[style="color: #888"] Este torneio começa quando #{@auction.players} jogadores estiverem inscritos
+      p.u-textCenter
+        label
+          | Clicando em CONFIRMAR você concorda com os termos acima
+      .join-in.u-textCenter
+        = button_to 'Confirmar', auction_bids_path(@auction), class: "btn #{@auction.tournament? ? '-btn-line-primary' : '-btn-line-secondary'} -btn-block -btn-lg", method: :post
+
+/ modal de rebuy / Re-entrada
+.modal-wrapper[id="auction-re-modal-#{@auction.id}"]
+  .modal.-best-guess
+    .box-badge.boxCard-badge[class="#{@auction.tournament? ? '-blue' : '-yellow'}"]
+      span.badge-game
+        i.fa.fa-badge
+        |  #{@auction.tournament? ? 'torneio' : 'super'}
+      span.badge-gameType  click
+    .modal-header
+      span.modal-close[data-close="modal"] &times;
+      h3.modal-title.u-textCenter = @auction.title
+      table.box-marketValue[style="font-size: 100%; margin-bottom: 19px;width: 100%"]
+        tbody
+          - if user_signed_in?
+            tr
+              td
+                span Seu saldo:
+              td[style="text-align: right"]
+                span.u-textYellow.u-textBold
+                  |  V
+                  i.fa.fa-bitcoin
+                  span.js-user-credits = " #{current_user.credits}"
+          tr
+            td
+              span Custo de re-entrada:
+            td[style="text-align: right"]
+              span.text-yellow.u-textBold
+                |  V
+                i.fa.fa-bitcoin
+                = " #{@auction.join_cost_in_credits} "
+          - if @auction.max_attempts.to_i > 0
+            tr
+              td
+                .box-marketValue[style="font-size: 100%"]
+                  span Quantidade re-entradas disponíveis:
+              td[style="text-align: right"]
+                span.text-yellow.js-maxAttempts[data-attempts="#{@auction.max_attempts}"]
+                  - maxText = @auction.max_attempts - @auction.auction_attempts.where(user: current_user).count - 1
+                  = maxText == 0 ? 'Este é sua última re-entrada' : maxText
+    .modal-body
+      p.u-textCenter
+        label
+          | Clicando em CONFIRMAR você concorda com o termos acima
+      .join-in.u-textCenter
+        = button_to 'Confirmar', auction_bids_path(@auction), class: "btn #{@auction.tournament? ? '-btn-line-primary' : '-btn-line-secondary'} -btn-block -btn-lg", method: :post

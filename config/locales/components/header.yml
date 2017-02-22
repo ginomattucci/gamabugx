@@ -1,0 +1,11 @@
+pt-BR:
+  partials:
+    header:
+      play_now: 'Jogue Sumatra!'
+      how_works: 'Como funciona'
+
+en:
+  partials:
+    header:
+      play_now: 'Play now'
+      how_works: 'How it works'

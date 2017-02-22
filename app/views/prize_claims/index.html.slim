@@ -1,0 +1,18 @@
+section.play.features
+  - if @games.any?
+    h2.heading.u-textCenter.-spaced Meus prêmios à Resgatar
+    .container.-small
+      .row
+        = render @games
+  - else
+    h2.heading.u-textCenter.-spaced Nenhum prêmio à Resgatar
+.container
+  hr.white
+section.play.features
+  - if @prize_claims.any?
+    h2.heading.u-textCenter.-spaced Meus prêmios já Resgatados
+    .container.-small.claimed
+      .row
+        = render @prize_claims
+  - else
+    h2.heading.u-textCenter.-spaced Nenhum prêmio já Resgatado

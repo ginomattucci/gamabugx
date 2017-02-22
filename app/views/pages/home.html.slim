@@ -1,0 +1,53 @@
+- if @banners.any?
+  section.slider
+    - @banners.each do |banner|
+      = link_to '', banner.url, target: :blank, class: 'flexEmbed -3by1', style: "background-image: url(#{banner.image.url});"
+
+section#howworks.features
+  h1.heading.u-textCenter.-spaced.u-marginBot50 Participe do Sumatra Games
+  .container.-small
+    .row
+      .columns.-md-1-3
+        .feature
+          .feature-image
+            span = image_tag('icon-gift.jpg')
+          h4.feature-title
+            | Jogos sobre Gama
+          p.feature-desc
+            | Responda a desafios super divertidos sobre a Sumatra e todo o Universo do Surf :)
+      .columns.-md-1-3
+        .feature
+          .feature-image
+            span = image_tag('icon-game.jpg')
+          h4.feature-title
+            | Ganhe Prêmios Sumatra
+          p.feature-desc
+            | Participe dos Games e dispute entre os demais jogadores os prêmios exclusivos da Sumatra /o/
+      .columns.-md-1-3
+        .feature
+          .feature-image
+            span = image_tag('icon-discount.jpg')
+          h4.feature-title
+            | Jogo Especial Unique
+          p.feature-desc
+            | O Grupo Unique forneceu para o Sumatra Games um prêmio incrível, confira logo abaixo!
+- if @highlight.present?
+  section#highlight.u-paddingTop80
+    h2.heading.u-textCenter.-spaced.u-marginBot50 Jogo Especial Sumatra
+    .container.-small
+      .row
+        - if @highlight.is_a?(Auction)
+          = render 'auctions/highlight', auction: @highlight
+        - elsif @highlight.is_a?(BestGuess)
+          = render 'best_guesses/highlight', best_guess: @highlight
+section#playnow.play.u-paddingTop80.u-paddingBot100
+  - unless @auctions.none? && @best_guesses.none?
+    h2.heading.u-textCenter.-spaced.u-marginBot50 Jogos em Andamento
+  - if @auctions.any?
+    .container.-small
+      .row
+        = render @auctions
+  - if @best_guesses.any?
+    .container.-small
+      .row
+        = render @best_guesses

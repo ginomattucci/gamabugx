@@ -1,0 +1,71 @@
+// # =================================================================
+// # Variables
+// # =================================================================
+
+// # Designer colors
+// # =================================================================
+
+$neutral: #999;
+$success: #5fccb7;
+$danger:  #e74c3c;
+$warning: #f9e84b;
+$info:    #4183D7;
+
+$brand-yellow:    #66cc00;
+$brand-blue:      #252525;
+$brand-blueDark:  #191919;
+$brand-gray:      #a5a5a5;
+$brand-lightGray: #f8f8f8;
+
+// # Components colors
+// # =================================================================
+
+// # ========== Buttons
+$button-white:  #bbb;
+$button-gray:   $neutral;
+$button-red:    $danger;
+$button-yellow: $brand-yellow;
+$button-blue:   $brand-blue;
+$button-green:  $success;
+
+// # ========== Header
+$header-background: #252525;
+
+// # ========== Submenu
+$submenu-background: #191919;
+
+// # ========== Dropdown
+$dropdown-background: #191919;
+
+// # ========== Footer
+$footer-background: #183c0f;
+
+// # ========== Menu
+$menu-color:  #fff;
+$menu-social: #66cc00;
+
+// # ========== Features
+$feature-image: rgba(233,233,233,0);
+$feature-desc:  $neutral;
+
+// # ========== Form
+$form-link-color: $brand-blue;
+$form-dangerZone-background: #E08283;
+$form-dangerZone-color: #f2f2f2;
+$form-passwordZone-background: $brand-blue;
+$form-passwordZone-color: $button-white;
+$form-passwordZone-link-color: $menu-color;
+
+// # ========== Box games
+$auction-theme: $brand-blue;
+$tournament-theme: $brand-yellow;
+
+$box-image-textColor: $brand-yellow;
+$box-title-color: #888;
+$box-price-color: $neutral;
+$box-info-background: #d1d1d1;
+$box-info-color: $neutral;
+
+$boxSuccess-background:  #1bbc9b;
+$boxSuccess-price-color: #333;
+$boxDanger-background: #d0483a;

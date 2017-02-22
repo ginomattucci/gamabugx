@@ -1,0 +1,75 @@
+doctype 5
+html  itemscope="" itemtype="http://schema.org/Product"
+  head
+    meta[charset="utf-8"]
+    /[if lt IE 9]
+      meta[content="text/html; charset=utf-8" http-equiv="Content-Type"]
+      = javascript_include_tag "//html5shiv.googlecode.com/svn/trunk/html5.js"
+      meta[http-equiv="x-ua-compatible" content="ie=edge"]
+    meta[name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes"]
+    title = content_for?(:page_title) ? "#{yield(:page_title)} - FazVirar" : 'Sumatra Games'
+
+    meta content="" name="description"
+    /! Schema.org markup for Google+
+    meta content="Bugx" itemprop="name"
+    meta content="Faça parte do mundo de diversão e compras do FazVirar, adquira os ViraBits e participe das melhores oportunidades em compras do Brasil, prêmios incríveis com preços irrisórios!" itemprop="description"
+    meta content="#{image_url('logo-full.jpg')}" itemprop="image"
+
+    /! Twitter Card data
+    meta content="product" name="twitter:card"
+    meta content="FazVirar" name="twitter:title"
+    meta content="Faça parte do mundo de diversão e compras do FazVirar, adquira os ViraBits e participe das melhores oportunidades em compras do Brasil, prêmios incríveis com preços irrisórios!" name="twitter:description"
+    meta content="@gino" name="twitter:creator"
+    meta content="#{image_url('logo-full.jpg')}" name="twitter:image"
+
+    /! Open Graph data
+    meta content="BugX" property="og:title"
+    meta content="article" property="og:type"
+    meta content="#{root_url}" property="og:url"
+    meta content="#{image_url('logo-full.jpg')}" property="og:image"
+    meta content="Faça parte do mundo de diversão e compras do FazVirar, adquira os ViraBits e participe das melhores oportunidades em compras do Brasil, prêmios incríveis com preços irrisórios!" property="og:description"
+    meta content="Bugx" property="og:site_name"
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    javascript:
+      var __kdt = __kdt || [];__kdt.push({"public_key":"#{Rails.application.secrets.konduto_public_key}"});__kdt.push({"post_on_load":false});
+    = javascript_include_tag '//messaging-public.realtime.co/js/2.1.0/ortc.js', 'application', 'https://js.iugu.com/v2', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+  body.site
+    = initjs_tag "Bugx"
+    #pubnub-widget[data-key="#{Rails.application.secrets.pubnub_subscribe}" data-channel="#{Rails.application.secrets.pubnub_channel}" data-username="#{current_user.try(:username)}"]
+    #konduto-widget[data-user="#{current_user.try(:id)}" data-key="#{Rails.application.secrets.konduto_public_key}"]
+    = render 'layouts/flash' if flash.any?
+    = render 'partials/header'
+    .site-body
+      = yield
+    = render 'partials/footer'
+
+    javascript:
+      WebFontConfig = {
+        google: { families: [ 'Titillium+Web:400,600,700,300:latin' ] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+
+    javascript:
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-69682470-2', 'auto');
+      ga('send', 'pageview');
+
+
+    - if Rails.env.production?
+
+    script#kdtjs[src="https://i.k-analytix.com/k.js" type="text/javascript"]
