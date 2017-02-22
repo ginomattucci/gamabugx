@@ -52,7 +52,7 @@
       span.u-textBlack = number_to_currency best_guess.market_price
     .box-price
       .box-price-big
-        span S
+        span G
         span.fa.fa-btc.u-fontSize110 &nbsp;
         span #{best_guess.join_cost_in_credits}
     .box-action.js-bid-action[data-costing="#{best_guess.join_cost_in_credits}" data-increase="#{number_to_currency best_guess.increase_value/100.to_f}" data-tournament="#{best_guess.tournament? && best_guess.happens_at.nil?}" data-type="BestGuess"]
@@ -192,7 +192,7 @@
                 span Seu saldo:
               td[style="text-align: right"]
                 span.u-textYellow.u-textBold
-                  |  S
+                  |  G
                   i.fa.fa-bitcoin
                   span.js-user-credits = " #{current_user.credits}"
           tr
@@ -200,7 +200,7 @@
               span #{best_guess.tournament? ? 'Custo de inscrição' : 'Custo do palpite'}:
             td[style="text-align: right"]
               span.u-textYellow.u-textBold
-                |  S
+                |  G
                 i.fa.fa-bitcoin
                 = " #{best_guess.join_cost_in_credits} "
           tr

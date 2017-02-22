@@ -59,11 +59,11 @@ window.Bugx =
         $(this).html(
           if $bidAct.data('tournament') || $bidAct.data('type') == 'BestGuess'
             if $bidAct.data('type') == 'Auction'
-              "<span style=\"line-height: 14px;font-size:14px;display:block;margin-top:2px\">S<i class=\"fa fa-bitcoin\" style=\"pointer-events: none; font-size:14px\"></i>#{val}</span><span style=\"font-size:10px;display:block\">#{if $bidAct.data('tournament') then " = #{$bidAct.data('tournament')} créditos no jogo" else ''}</span>"
+              "<span style=\"line-height: 14px;font-size:14px;display:block;margin-top:2px\">G<i class=\"fa fa-bitcoin\" style=\"pointer-events: none; font-size:14px\"></i>#{val}</span><span style=\"font-size:10px;display:block\">#{if $bidAct.data('tournament') then " = #{$bidAct.data('tournament')} créditos no jogo" else ''}</span>"
             else
-              "<span style=\"line-height: 14px;font-size:14px;display:block;margin-top:2px\">S<i class=\"fa fa-bitcoin\" style=\"pointer-events: none; font-size:14px\"></i>#{val}</span><span style=\"font-size:10px;display:block\"> +#{increaseValue}/palpite</span>"
+              "<span style=\"line-height: 14px;font-size:14px;display:block;margin-top:2px\">G<i class=\"fa fa-bitcoin\" style=\"pointer-events: none; font-size:14px\"></i>#{val}</span><span style=\"font-size:10px;display:block\"> +#{increaseValue}/palpite</span>"
           else
-            "<span style=\"line-height: 14px;font-size:14px;display:block;margin-top:2px\">S<i class=\"fa fa-bitcoin\" style=\"pointer-events: none; font-size:14px\"></i>#{val}</span><span style=\"font-size:10px;display:block\"> +#{increaseValue}/click</span>"
+            "<span style=\"line-height: 14px;font-size:14px;display:block;margin-top:2px\">G<i class=\"fa fa-bitcoin\" style=\"pointer-events: none; font-size:14px\"></i>#{val}</span><span style=\"font-size:10px;display:block\"> +#{increaseValue}/click</span>"
         )
       )
 
